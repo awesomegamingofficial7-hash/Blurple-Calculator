@@ -1,0 +1,395 @@
+Calculator By Aarav
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#23272a">
+    <title>Blurple Pro App</title>
+    <style>
+        /* Base Full-Screen Styling */
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #23272a; margin: 0; height: 100dvh; display: flex; flex-direction: column; color: #ffffff; overflow: hidden; }
+        
+        /* Tab Navigation */
+        .tab-bar { display: flex; background: #1e1f22; padding: 10px; flex-shrink: 0; }
+        .tab-btn { flex: 1; padding: 15px; background: transparent; border: none; color: #8e9297; font-size: 1.1rem; font-weight: bold; cursor: pointer; border-bottom: 3px solid transparent; transition: 0.2s;}
+        .tab-btn.active { color: #ffffff; border-bottom: 3px solid #5865F2; }
+
+        /* Content Areas */
+        .tab-content { display: none; flex: 1; flex-direction: column; padding: 20px; box-sizing: border-box; overflow-y: auto; }
+        .tab-content.active { display: flex; }
+
+        /* Calculator Styles */
+        #display { width: 100%; padding: 20px; margin-bottom: 10px; font-size: 2rem; background: #1e1f22; border: none; color: #ffffff; border-radius: 12px; box-sizing: border-box; text-align: right; }
+        .result-box { padding: 15px; margin-bottom: 20px; border-radius: 12px; background: #2c2f33; font-size: 1.5rem; font-weight: bold; border-left: 5px solid #5865F2; text-align: right; min-height: 30px; }
+        .keypad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 15px; }
+        button.key { background: #2c2f33; border: none; border-radius: 12px; color: white; font-size: 1.2rem; cursor: pointer; font-weight: bold; padding: 15px 0; }
+        button.key:active { background: #1e1f22; transform: scale(0.95); }
+        button.key.sci { background: #4f545c; font-size: 1rem; }
+        button.key.op { background: #5865F2; }
+        button.key.action { background: #ed4245; }
+        .calc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn-calc { padding: 20px; font-size: 1.1rem; font-weight: bold; border: none; border-radius: 12px; color: white; cursor: pointer; margin-bottom: 20px;}
+        .btn-bodmas { background: #4CAF50; }
+        .btn-no-bodmas { background: #5865F2; }
+
+        /* History Styles */
+        .history-container { background: #1e1f22; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; margin-bottom: 20px; }
+        .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; color: #8e9297; font-weight: bold; }
+        .btn-clear-history { background: transparent; color: #ed4245; border: none; cursor: pointer; font-size: 0.9rem; font-weight: bold; }
+        #history-list { display: flex; flex-direction: column; gap: 10px; }
+        .history-item { background: #2c2f33; padding: 10px; border-radius: 8px; font-size: 1.1rem; text-align: right; border-left: 4px solid #5865F2; }
+        .history-item.seq { border-left-color: #2196F3; } 
+
+        /* Converter Styles */
+        .conv-group { margin-bottom: 20px; }
+        .conv-group label { display: block; margin-bottom: 10px; color: #8e9297; }
+        select, input.conv-input { width: 100%; padding: 15px; font-size: 1.2rem; background: #2c2f33; border: none; color: white; border-radius: 8px; box-sizing: border-box; margin-bottom: 10px; outline: none;}
+        optgroup { background: #1e1f22; color: #8e9297; font-weight: bold; }
+        option { background: #2c2f33; color: white; }
+        .btn-convert { width: 100%; padding: 15px; background: #5865F2; border: none; color: white; font-size: 1.2rem; border-radius: 8px; font-weight: bold; margin-bottom: 30px; cursor: pointer;}
+        .btn-convert:active { transform: scale(0.98); }
+
+        /* Custom Web Toast Notification */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: opacity 0.5s, bottom 0.5s;
+        }
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+        #toast.offline { background-color: #ed4245; } /* Red for offline */
+        #toast.online { background-color: #4CAF50; }  /* Green for online */
+
+    </style>
+</head>
+<body>
+
+<div id="toast">Message here</div>
+
+<div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('calc')" id="btn-calc">Calculator</button>
+    <button class="tab-btn" onclick="switchTab('conv')" id="btn-conv">Converter</button>
+</div>
+
+<div id="tab-calc" class="tab-content active">
+    <input type="text" id="display" readonly placeholder="0">
+    <div class="result-box" id="result">0</div>
+    <div class="keypad">
+        <button class="key sci" onclick="append('sin(')">sin</button> <button class="key sci" onclick="append('cos(')">cos</button> <button class="key sci" onclick="append('tan(')">tan</button> <button class="key sci" onclick="append('√(')">√</button>
+        <button class="key action" onclick="clearDisplay()">C</button> <button class="key sci" onclick="append('^')">^</button> <button class="key sci" onclick="append('π')">π</button> <button class="key op" onclick="append('÷')">÷</button>
+        <button class="key" onclick="append('7')">7</button> <button class="key" onclick="append('8')">8</button> <button class="key" onclick="append('9')">9</button> <button class="key op" onclick="append('x')">x</button>
+        <button class="key" onclick="append('4')">4</button> <button class="key" onclick="append('5')">5</button> <button class="key" onclick="append('6')">6</button> <button class="key op" onclick="append('-')">-</button>
+        <button class="key" onclick="append('1')">1</button> <button class="key" onclick="append('2')">2</button> <button class="key" onclick="append('3')">3</button> <button class="key op" onclick="append('+')">+</button>
+        <button class="key" onclick="append('0')">0</button> <button class="key" onclick="append('.')">.</button> <button class="key" onclick="append(')')">)</button> <button class="key action" onclick="deleteLast()">DEL</button>
+    </div>
+    <div class="calc-row">
+        <button class="btn-calc btn-bodmas" onclick="calculateBODMAS()">= BODMAS</button>
+        <button class="btn-calc btn-no-bodmas" onclick="calculateNoBODMAS()">= Sequential</button>
+    </div>
+    <div class="history-container">
+        <div class="history-header"><span>Calculation History</span><button class="btn-clear-history" onclick="clearHistory()">Clear</button></div>
+        <div id="history-list"></div>
+    </div>
+</div>
+
+<div id="tab-conv" class="tab-content">
+    <div class="conv-group">
+        <label>Value to Convert:</label>
+        <input type="number" id="conv-val" class="conv-input" placeholder="Enter amount">
+    </div>
+    
+    <div class="conv-group">
+        <label>From:</label>
+        <select id="conv-from" onchange="updateToDropdown()">
+            <optgroup label="Currencies (Live Rates)">
+                <option value="USD">US Dollar (USD)</option>
+                <option value="EUR">Euro (EUR)</option>
+                <option value="GBP">British Pound (GBP)</option>
+                <option value="INR">Indian Rupee (INR)</option>
+                <option value="JPY">Japanese Yen (JPY)</option>
+            </optgroup>
+            <optgroup label="Length & Weight">
+                <option value="m">Meters (m)</option>
+                <option value="ft">Feet (ft)</option>
+                <option value="kg">Kilograms (kg)</option>
+                <option value="lb">Pounds (lbs)</option>
+            </optgroup>
+            <optgroup label="Temperature">
+                <option value="c">Celsius (°C)</option>
+                <option value="f">Fahrenheit (°F)</option>
+            </optgroup>
+            <optgroup label="Data Storage">
+                <option value="mb">Megabytes (MB)</option>
+                <option value="gb">Gigabytes (GB)</option>
+                <option value="mib">Mebibytes (MiB)</option>
+                <option value="gib">Gibibytes (GiB)</option>
+            </optgroup>
+        </select>
+    </div>
+    
+    <div class="conv-group">
+        <label>To:</label>
+        <select id="conv-to"></select>
+    </div>
+    
+    <button class="btn-convert" onclick="convertUnits()">Convert</button>
+    <div class="result-box" style="text-align:center;" id="conv-result">Result will appear here</div>
+</div>
+
+<script>
+    // --- GLOBAL VARIABLES & DATA ---
+    let calcHistory = [];
+    let liveCurrencyRates = {}; // Holds the fetched rates
+    
+    // This dictionary controls our dynamic dropdowns. It maps categories to their units.
+    const unitCategories = {
+        currency: { USD: "US Dollar (USD)", EUR: "Euro (EUR)", GBP: "British Pound (GBP)", INR: "Indian Rupee (INR)", JPY: "Japanese Yen (JPY)" },
+        length_weight: { m: "Meters (m)", ft: "Feet (ft)", kg: "Kilograms (kg)", lb: "Pounds (lbs)" },
+        temperature: { c: "Celsius (°C)", f: "Fahrenheit (°F)" },
+        data: { mb: "Megabytes (MB)", gb: "Gigabytes (GB)", mib: "Mebibytes (MiB)", gib: "Gibibytes (GiB)" }
+    };
+
+    /* --- TOAST NOTIFICATION LOGIC --- */
+    function showToast(message, type) {
+        let toast = document.getElementById("toast");
+        toast.innerText = message;
+        toast.className = "show " + type;
+        // Hide after 4 seconds
+        setTimeout(function(){ toast.className = toast.className.replace("show " + type, ""); }, 4000);
+    }
+
+    // Network Event Listeners
+    window.addEventListener('offline', () => {
+        showToast("Running in offline mode", "offline");
+    });
+    
+    window.addEventListener('online', () => {
+        showToast("Your Internet Connection Is Live Again. Getting Latest Conversion Rates", "online");
+        fetchCurrencyRates(); // Fetch fresh data immediately
+    });
+
+    /* --- LIVE CURRENCY API LOGIC --- */
+    async function fetchCurrencyRates() {
+        try {
+            // Using a free, no-key-required API base on USD
+            let response = await fetch('https://open.er-api.com/v6/latest/USD');
+            let data = await response.json();
+            liveCurrencyRates = data.rates;
+            
+            // Save to localStorage so it works offline tomorrow!
+            localStorage.setItem('savedRates', JSON.stringify(liveCurrencyRates));
+        } catch (error) {
+            console.log("Offline or API blocked. Using saved rates.");
+        }
+    }
+
+    /* --- INITIALIZATION --- */
+    window.onload = function() {
+        // Load Tabs
+        let savedTab = localStorage.getItem('activeTab');
+        if (savedTab) switchTab(savedTab);
+
+        // Load History
+        let savedHist = localStorage.getItem('calcHistory');
+        if (savedHist) { calcHistory = JSON.parse(savedHist); renderHistory(); }
+
+        // Setup Dropdowns
+        updateToDropdown(); // Populate "To" dropdown based on default "From"
+
+        // Load Saved Converter Values
+        let savedConvVal = localStorage.getItem('convVal');
+        let savedConvFrom = localStorage.getItem('convFrom');
+        let savedConvTo = localStorage.getItem('convTo');
+        
+        if (savedConvVal) document.getElementById('conv-val').value = savedConvVal;
+        if (savedConvFrom) {
+            document.getElementById('conv-from').value = savedConvFrom;
+            updateToDropdown(); // Re-populate based on saved "From"
+            if (savedConvTo) document.getElementById('conv-to').value = savedConvTo;
+        }
+
+        // Try to load saved currency rates first (for immediate offline support)
+        let savedRates = localStorage.getItem('savedRates');
+        if (savedRates) liveCurrencyRates = JSON.parse(savedRates);
+
+        // Fetch fresh rates in the background if online
+        if (navigator.onLine) fetchCurrencyRates();
+
+        if (savedConvVal) convertUnits();
+    }
+
+    /* --- TAB LOGIC --- */
+    function switchTab(tab) {
+        document.getElementById('tab-calc').classList.remove('active');
+        document.getElementById('tab-conv').classList.remove('active');
+        document.getElementById('btn-calc').classList.remove('active');
+        document.getElementById('btn-conv').classList.remove('active');
+        document.getElementById('tab-' + tab).classList.add('active');
+        document.getElementById('btn-' + tab).classList.add('active');
+        localStorage.setItem('activeTab', tab);
+    }
+
+    /* --- CALCULATOR HISTORY LOGIC --- */
+    function addToHistory(expression, result, type) {
+        calcHistory.push({ expr: expression, res: result, type: type });
+        localStorage.setItem('calcHistory', JSON.stringify(calcHistory));
+        renderHistory();
+    }
+    function renderHistory() {
+        const list = document.getElementById('history-list');
+        list.innerHTML = ''; 
+        if (calcHistory.length === 0) { list.innerHTML = '<div style="text-align:center; color:#8e9297;">No history yet.</div>'; return; }
+        for (let i = calcHistory.length - 1; i >= 0; i--) {
+            let item = calcHistory[i];
+            let div = document.createElement('div');
+            div.className = 'history-item ' + (item.type === 'Sequential' ? 'seq' : '');
+            div.innerHTML = `<span style="font-size:0.9rem; color:#8e9297;">${item.expr} =</span><br/>${item.type}: <strong>${item.res}</strong>`;
+            list.appendChild(div);
+        }
+    }
+    function clearHistory() { calcHistory = []; localStorage.removeItem('calcHistory'); renderHistory(); }
+
+    /* --- CALCULATOR MATH LOGIC --- */
+    const display = document.getElementById('display');
+    const resultBox = document.getElementById('result');
+    function append(char) { display.value += char; }
+    function clearDisplay() { display.value = ''; resultBox.innerText = '0'; }
+    function deleteLast() { display.value = display.value.slice(0, -1); }
+    function getCleanExpression() {
+        return display.value.replace(/x/g, '*').replace(/÷/g, '/').replace(/\^/g, '**').replace(/π/g, 'Math.PI')
+                  .replace(/sin\(/g, 'Math.sin(').replace(/cos\(/g, 'Math.cos(').replace(/tan\(/g, 'Math.tan(').replace(/√\(/g, 'Math.sqrt(');
+    }
+    function calculateBODMAS() {
+        try {
+            let originalExpr = display.value; let expr = getCleanExpression(); if (!expr) return;
+            let res = eval(expr); res = Math.round(res * 10000) / 10000;
+            resultBox.innerText = "BODMAS: " + res; addToHistory(originalExpr, res, 'BODMAS'); 
+        } catch (e) { resultBox.innerText = "Error"; }
+    }
+    function calculateNoBODMAS() {
+        try {
+            let originalExpr = display.value; let expr = getCleanExpression(); if (!expr) return;
+            if (expr.includes('Math') || expr.includes('**')) { resultBox.innerText = "Sequential is for basic math (+, -, x, ÷)."; return; }
+            let nums = expr.split(/([+\-*/])/).filter(x => !['+', '-', '*', '/'].includes(x));
+            let ops = expr.split('').filter(x => ['+', '-', '*', '/'].includes(x));
+            let total = parseFloat(nums[0]);
+            for (let i = 0; i < ops.length; i++) {
+                let nextNum = parseFloat(nums[i + 1]); let op = ops[i];
+                if (op === '+') total += nextNum; else if (op === '-') total -= nextNum;
+                else if (op === '*') total *= nextNum; else if (op === '/') total /= nextNum;
+            }
+            if (isNaN(total)) throw new Error("NaN"); total = Math.round(total * 10000) / 10000;
+            resultBox.innerText = "Sequential: " + total; addToHistory(originalExpr, total, 'Sequential');
+        } catch (e) { resultBox.innerText = "Error"; }
+    }
+
+    /* --- DYNAMIC DROPDOWN LOGIC --- */
+    function getCategoryOfUnit(unitVal) {
+        // Search through our dictionary to find which category a unit belongs to
+        for (let category in unitCategories) {
+            if (unitCategories[category].hasOwnProperty(unitVal)) {
+                return category;
+            }
+        }
+        return null;
+    }
+
+    function updateToDropdown() {
+        let fromSelect = document.getElementById('conv-from');
+        let toSelect = document.getElementById('conv-to');
+        let selectedFromVal = fromSelect.value;
+        
+        let category = getCategoryOfUnit(selectedFromVal);
+        let optionsObj = unitCategories[category];
+
+        // Remember what was previously selected in "To" so we can keep it if possible
+        let previousToSelection = toSelect.value;
+
+        // Clear out the old options
+        toSelect.innerHTML = '';
+
+        // Inject only the valid options for this category
+        for (let key in optionsObj) {
+            let newOption = document.createElement("option");
+            newOption.value = key;
+            newOption.text = optionsObj[key];
+            toSelect.appendChild(newOption);
+        }
+
+        // If the old selection is still valid in this new list, re-select it
+        if (optionsObj.hasOwnProperty(previousToSelection)) {
+            toSelect.value = previousToSelection;
+        }
+    }
+
+    /* --- CONVERTER LOGIC --- */
+    function convertUnits() {
+        let valInput = document.getElementById('conv-val').value;
+        let from = document.getElementById('conv-from').value;
+        let to = document.getElementById('conv-to').value;
+        let resBox = document.getElementById('conv-result');
+
+        let val = parseFloat(valInput);
+        if (isNaN(val)) { resBox.innerText = "Please enter a number."; return; }
+
+        localStorage.setItem('convVal', valInput);
+        localStorage.setItem('convFrom', from);
+        localStorage.setItem('convTo', to);
+
+        let result = null;
+        let category = getCategoryOfUnit(from);
+
+        if (from === to) {
+            result = val; // Same Unit
+        } 
+        else if (category === 'currency') {
+            // Live Currency Calculation
+            if (!liveCurrencyRates || Object.keys(liveCurrencyRates).length === 0) {
+                resBox.innerText = "Currency rates unavailable. Go online to download.";
+                return;
+            }
+            // Math logic: Convert "From" to USD, then USD to "To"
+            let inUSD = val / liveCurrencyRates[from];
+            result = inUSD * liveCurrencyRates[to];
+        }
+        else if (from === 'c' && to === 'f') result = (val * 9/5) + 32;
+        else if (from === 'f' && to === 'c') result = (val - 32) * 5/9;
+        else if (from === 'm' && to === 'ft') result = val * 3.28084;
+        else if (from === 'ft' && to === 'm') result = val / 3.28084;
+        else if (from === 'kg' && to === 'lb') result = val * 2.20462;
+        else if (from === 'lb' && to === 'kg') result = val / 2.20462;
+        else if (from === 'mb' && to === 'gb') result = val / 1000;
+        else if (from === 'gb' && to === 'mb') result = val * 1000;
+        else if (from === 'mib' && to === 'gib') result = val / 1024;
+        else if (from === 'gib' && to === 'mib') result = val * 1024;
+        
+        if (result === null) { resBox.innerText = "Cannot convert those units."; return; }
+
+        // Format result: limit long decimals
+        result = Math.round(result * 100000) / 100000;
+        
+        let unitDisplayFrom = from.toUpperCase();
+        let unitDisplayTo = to.toUpperCase();
+        if (from === 'c' || from === 'f') unitDisplayFrom = '°' + unitDisplayFrom;
+      
+
