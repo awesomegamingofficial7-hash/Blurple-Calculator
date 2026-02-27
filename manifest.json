@@ -3,8 +3,8 @@
   "name": "Blurple Pro Calculator",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/5064/5064943.png",
-      "type": "image/png",
+      "src": "./icon.svg",
+      "type": "image/svg+xml",
       "sizes": "512x512",
       "purpose": "any maskable"
     }
