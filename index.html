@@ -1,91 +1,104 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="blurple">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjEyOCIgZmlsbD0iIzU4NjVGMiIvPjxyZWN0IHg9IjEwNiIgeT0iOTYiIHdpZHRoPSIzMDAiIGhlaWdodD0iMzIwIiByeD0iMzIiIGZpbGw9IiMyMzI3MmEiLz48cmVjdCB4PSIxMzYiIHk9IjEzNiIgd2lkdGg9IjI0MCIgaGVpZ2h0PSI3MCIgcng9IjEyIiBmaWxsPSIjMWUxZjIyIi8+PHJlY3QgeD0iMjk2IiB5PSIxNjUiIHdpZHRoPSI2MCIgaGVpZ2h0PSIxMiIgcng9IjYiIGZpbGw9IiM1ODY1RjIiLz48Y2lyY2xlIGN4PSIxNjYiIGN5PSIyNTYiIHI9IjI0IiBmaWxsPSIjNGY1NDVjIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMjU2IiByPSIyNCIgZmlsbD0iIzRmNTQ1YyIvPjxjaXJjbGUgY3g9IjM0NiIgY3k9IjI1NiIgcj0iMjQiIGZpbGw9IiNlZDQyNDUiLz48Y2lyY2xlIGN4PSIxNjYiIGN5PSIzMzYiIHI9IjI0IiBmaWxsPSIjNGY1NDVjIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMzM2IiByPSIyNCIgZmlsbD0iIzRmNTQ1YyIvPjxjaXJjbGUgY3g9IjM0NiIgY3k9IjMzNiIgcj0iMjQiIGZpbGw9IiM0Q0FGNTQiLz48L3N2Zz4=">
-    
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" id="meta-theme-color" content="#23272a">
+    <meta name="theme-color" id="meta-theme-color" content="#313338">
     
     <title>Blurple Pro App</title>
     
     <style>
-        /* --- THEME VARIABLES --- */
-        :root[data-theme="blurple"] {
-            --bg-main: #23272a; --bg-sec: #1e1f22; --bg-card: #2c2f33;
-            --text-main: #ffffff; --text-muted: #8e9297;
-            --accent: #5865F2; --sci-btn: #4f545c;
-        }
-        :root[data-theme="midnight"] {
-            --bg-main: #000000; --bg-sec: #121212; --bg-card: #1e1e1e;
-            --text-main: #e3e3e3; --text-muted: #a0a0a0;
-            --accent: #BB86FC; --sci-btn: #333333;
-        }
-        :root[data-theme="light"] {
-            --bg-main: #f2f3f5; --bg-sec: #ffffff; --bg-card: #e3e5e8;
-            --text-main: #2e3338; --text-muted: #5c5f63;
-            --accent: #5865F2; --sci-btn: #d4d7dc;
-        }
+        /* --- THE MASTER THEME DICTIONARY --- */
+        /* Core/Discord Themes */
+        :root[data-theme="dark"] { --bg-main: #313338; --bg-sec: #2b2d31; --bg-card: #1e1f22; --text-main: #f2f3f5; --text-muted: #b5bac1; --accent: #5865F2; --sci-btn: #4e5058; --border-card: none; }
+        :root[data-theme="midnight"] { --bg-main: #000000; --bg-sec: #111214; --bg-card: #000000; --text-main: #f2f3f5; --text-muted: #80848e; --accent: #5865F2; --sci-btn: #2b2d31; --border-card: 1px solid #1e1f22; }
+        :root[data-theme="light"] { --bg-main: #ffffff; --bg-sec: #f2f3f5; --bg-card: #e3e5e8; --text-main: #060607; --text-muted: #4e5058; --accent: #5865F2; --sci-btn: #d4d7dc; --border-card: none; }
+        :root[data-theme="blurple"] { --bg-main: #23272a; --bg-sec: #1e1f22; --bg-card: #2c2f33; --text-main: #ffffff; --text-muted: #8e9297; --accent: #5865F2; --sci-btn: #4f545c; --border-card: none; }
+        /* New Requested Themes */
+        :root[data-theme="mint-apple"] { --bg-main: #e8f5e9; --bg-sec: #c8e6c9; --bg-card: #a5d6a7; --text-main: #1b5e20; --text-muted: #2e7d32; --accent: #4caf50; --sci-btn: #81c784; --border-card: none; }
+        :root[data-theme="citrus-sherbert"] { --bg-main: #fff3e0; --bg-sec: #ffe0b2; --bg-card: #ffcc80; --text-main: #e65100; --text-muted: #ef6c00; --accent: #ff9800; --sci-btn: #ffb74d; --border-card: none; }
+        :root[data-theme="retro-raincloud"] { --bg-main: #eceff1; --bg-sec: #cfd8dc; --bg-card: #b0bec5; --text-main: #263238; --text-muted: #455a64; --accent: #607d8b; --sci-btn: #90a4ae; --border-card: none; }
+        :root[data-theme="hanami"] { --bg-main: #fce4ec; --bg-sec: #f8bbd0; --bg-card: #f48fb1; --text-main: #880e4f; --text-muted: #c2185b; --accent: #e91e63; --sci-btn: #f06292; --border-card: none; }
+        :root[data-theme="sunrise"] { --bg-main: #fbe9e7; --bg-sec: #ffccbc; --bg-card: #ffab91; --text-main: #bf360c; --text-muted: #d84315; --accent: #ff5722; --sci-btn: #ff8a65; --border-card: none; }
+        :root[data-theme="cotton-candy"] { --bg-main: #f3e5f5; --bg-sec: #e1bee7; --bg-card: #ce93d8; --text-main: #4a148c; --text-muted: #6a1b9a; --accent: #9c27b0; --sci-btn: #ba68c8; --border-card: none; }
+        :root[data-theme="lofi-vibes"] { --bg-main: #2b213a; --bg-sec: #1f182b; --bg-card: #3b2e4d; --text-main: #eaddff; --text-muted: #b8a5d8; --accent: #9d81d4; --sci-btn: #4f3d68; --border-card: none; }
+        :root[data-theme="desert-khaki"] { --bg-main: #efebe9; --bg-sec: #d7ccc8; --bg-card: #bcaaa4; --text-main: #3e2723; --text-muted: #5d4037; --accent: #795548; --sci-btn: #a1887f; --border-card: none; }
+        :root[data-theme="sunset"] { --bg-main: #3e2723; --bg-sec: #26140f; --bg-card: #4e342e; --text-main: #fbe9e7; --text-muted: #d84315; --accent: #ff7043; --sci-btn: #5d4037; --border-card: none; }
+        :root[data-theme="chroma-glow"] { --bg-main: #121212; --bg-sec: #1e1e1e; --bg-card: #2c2c2c; --text-main: #ffffff; --text-muted: #a0a0a0; --accent: #00e5ff; --sci-btn: #424242; --border-card: none; }
+        :root[data-theme="forest"] { --bg-main: #1b5e20; --bg-sec: #144517; --bg-card: #2e7d32; --text-main: #e8f5e9; --text-muted: #a5d6a7; --accent: #66bb6a; --sci-btn: #388e3c; --border-card: none; }
+        :root[data-theme="crimson"] { --bg-main: #b71c1c; --bg-sec: #880e4f; --bg-card: #c62828; --text-main: #ffebee; --text-muted: #ffcdd2; --accent: #ff5252; --sci-btn: #d32f2f; --border-card: none; }
+        :root[data-theme="midnight-blurple"] { --bg-main: #0d1117; --bg-sec: #010409; --bg-card: #161b22; --text-main: #c9d1d9; --text-muted: #8b949e; --accent: #5865F2; --sci-btn: #21262d; --border-card: 1px solid #30363d; }
+        :root[data-theme="mars"] { --bg-main: #bf360c; --bg-sec: #870000; --bg-card: #d84315; --text-main: #fbe9e7; --text-muted: #ffab91; --accent: #ff5722; --sci-btn: #e64a19; --border-card: none; }
+        :root[data-theme="dusk"] { --bg-main: #311b92; --bg-sec: #1a005d; --bg-card: #4527a0; --text-main: #ede7f6; --text-muted: #b388ff; --accent: #651fff; --sci-btn: #512da8; --border-card: none; }
+        :root[data-theme="under-the-sea"] { --bg-main: #004d40; --bg-sec: #00251a; --bg-card: #00695c; --text-main: #e0f2f1; --text-muted: #80cbc4; --accent: #1de9b6; --sci-btn: #00796b; --border-card: none; }
+        :root[data-theme="retro-storm"] { --bg-main: #263238; --bg-sec: #102027; --bg-card: #37474f; --text-main: #eceff1; --text-muted: #90a4ae; --accent: #00bcd4; --sci-btn: #455a64; --border-card: none; }
+        :root[data-theme="neon-nights"] { --bg-main: #050505; --bg-sec: #121212; --bg-card: #1f1f1f; --text-main: #00ffff; --text-muted: #ff00ff; --accent: #ff00ff; --sci-btn: #2a2a2a; --border-card: 1px solid #333; }
+        :root[data-theme="strawberry-lemonade"] { --bg-main: #fff0f5; --bg-sec: #ffb6c1; --bg-card: #ff69b4; --text-main: #8b0000; --text-muted: #c71585; --accent: #ff1493; --sci-btn: #ff82ab; --border-card: none; }
+        :root[data-theme="aurora"] { --bg-main: #00332a; --bg-sec: #001f1a; --bg-card: #004d40; --text-main: #e0f2f1; --text-muted: #69f0ae; --accent: #00e676; --sci-btn: #00695c; --border-card: none; }
+        :root[data-theme="sepia"] { --bg-main: #f4ecd8; --bg-sec: #e8dcc4; --bg-card: #d5c4a1; --text-main: #5c4033; --text-muted: #8b5a2b; --accent: #a0522d; --sci-btn: #c4b087; --border-card: none; }
 
         /* --- NATIVE APP FIXES --- */
-        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
+        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; transition: background 0.3s, color 0.3s, border 0.3s; }
         button, .tab-btn { user-select: none; -webkit-user-select: none; touch-action: manipulation; }
         input, select { user-select: auto; -webkit-user-select: auto; }
 
         /* --- BASE STYLING --- */
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg-main); margin: 0; height: 100dvh; display: flex; flex-direction: column; color: var(--text-main); overflow: hidden; }
         
-        .tab-bar { display: flex; background: var(--bg-sec); padding: 10px; flex-shrink: 0; align-items: center;}
-        .tab-btn { flex: 1; padding: 15px; background: transparent; border: none; color: var(--text-muted); font-size: 1.1rem; font-weight: bold; cursor: pointer; border-bottom: 3px solid transparent; }
+        .tab-bar { display: flex; background: var(--bg-sec); padding: 5px; flex-shrink: 0; align-items: center;}
+        .tab-btn { flex: 1; padding: 15px 5px; background: transparent; border: none; color: var(--text-muted); font-size: 1.05rem; font-weight: bold; cursor: pointer; border-bottom: 3px solid transparent; display:flex; justify-content:center; align-items:center; gap: 8px;}
         .tab-btn.active { color: var(--text-main); border-bottom: 3px solid var(--accent); }
-        .theme-btn { background: transparent; border: none; font-size: 1.5rem; padding: 10px; cursor: pointer; border-radius: 50%; }
+        .tab-btn svg { width: 18px; height: 18px; fill: currentColor; }
         
         .tab-content { display: none; flex: 1; flex-direction: column; padding: 20px; overflow-y: auto; }
         .tab-content.active { display: flex; }
 
         /* --- CALCULATOR UI --- */
-        #display { width: 100%; padding: 20px; margin-bottom: 10px; font-size: 2rem; background: var(--bg-sec); border: none; color: var(--text-main); border-radius: 12px; text-align: right; outline: none; }
+        #display { width: 100%; padding: 20px; margin-bottom: 10px; font-size: 2rem; background: var(--bg-sec); border: var(--border-card); color: var(--text-main); border-radius: 12px; text-align: right; outline: none; }
         #display:focus { border: 2px solid var(--accent); padding: 18px; }
-        .result-box { padding: 15px; margin-bottom: 20px; border-radius: 12px; background: var(--bg-card); font-size: 1.5rem; font-weight: bold; border-left: 5px solid var(--accent); text-align: right; min-height: 30px; }
+        .result-box { padding: 15px; margin-bottom: 20px; border-radius: 12px; background: var(--bg-card); font-size: 1.5rem; font-weight: bold; border: var(--border-card); border-left: 5px solid var(--accent); text-align: right; min-height: 30px; }
         
         .keypad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 15px; }
-        button.key { background: var(--bg-card); border: none; border-radius: 12px; color: var(--text-main); font-size: 1.2rem; cursor: pointer; font-weight: bold; padding: 15px 0; }
+        button.key { background: var(--bg-card); border: var(--border-card); border-radius: 12px; color: var(--text-main); font-size: 1.2rem; cursor: pointer; font-weight: bold; padding: 15px 0; }
         button.key:active { transform: scale(0.95); opacity: 0.8; }
         button.key.sci { background: var(--sci-btn); font-size: 1rem; }
-        button.key.op { background: var(--accent); color: white;}
+        button.key.op { background: var(--accent); color: var(--bg-main); }
         button.key.action { background: #ed4245; color: white;}
         
         .calc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
         .btn-calc { padding: 20px; font-size: 1.1rem; font-weight: bold; border: none; border-radius: 12px; color: white; cursor: pointer; }
         .btn-calc:active { transform: scale(0.98); }
-        .btn-bodmas { background: #4CAF50; } 
-        .btn-no-bodmas { background: var(--accent); }
+        .btn-bodmas { background: #23a559; color: white; }
+        .btn-no-bodmas { background: var(--accent); color: var(--bg-main); }
 
         /* --- HISTORY UI --- */
-        .history-container { background: var(--bg-sec); border-radius: 12px; padding: 15px; display: flex; flex-direction: column; margin-bottom: 20px; }
+        .history-container { background: var(--bg-sec); border: var(--border-card); border-radius: 12px; padding: 15px; display: flex; flex-direction: column; margin-bottom: 20px; }
         .history-header { display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--text-muted); font-weight: bold; }
         .btn-clear-history { background: transparent; color: #ed4245; border: none; cursor: pointer; font-size: 0.9rem; font-weight: bold; }
         #history-list { display: flex; flex-direction: column; gap: 10px; }
         .history-item { background: var(--bg-card); padding: 10px; border-radius: 8px; font-size: 1.1rem; text-align: right; border-left: 4px solid var(--accent); }
-        .history-item.seq { border-left-color: #2196F3; } 
 
-        /* --- CONVERTER UI --- */
-        .conv-group { margin-bottom: 15px; }
+        /* --- CONVERTER & THEMES UI --- */
+        .conv-group, .theme-group { margin-bottom: 15px; }
         .conv-group label { display: block; margin-bottom: 8px; color: var(--text-muted); font-weight: bold; }
-        select, input.conv-input { width: 100%; padding: 15px; font-size: 1.2rem; background: var(--bg-card); border: none; color: var(--text-main); border-radius: 8px; outline: none; }
+        select, input.conv-input { width: 100%; padding: 15px; font-size: 1.2rem; background: var(--bg-card); border: var(--border-card); color: var(--text-main); border-radius: 8px; outline: none; }
         input.conv-input:focus { border: 2px solid var(--accent); padding: 13px;}
         optgroup { background: var(--bg-sec); color: var(--text-muted); font-weight: bold; }
         option { background: var(--bg-card); color: var(--text-main); }
-        .btn-convert { width: 100%; padding: 15px; background: var(--accent); border: none; color: white; font-size: 1.2rem; border-radius: 8px; font-weight: bold; margin-bottom: 30px; cursor: pointer;}
+        .btn-convert { width: 100%; padding: 15px; background: var(--accent); border: none; color: var(--bg-main); font-size: 1.2rem; border-radius: 8px; font-weight: bold; margin-bottom: 30px; cursor: pointer;}
         
+        .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .theme-btn-card { background: var(--bg-card); border: 2px solid transparent; padding: 15px 10px; border-radius: 8px; color: var(--text-main); font-weight: bold; font-size: 1rem; text-align: center; cursor: pointer; }
+        .theme-btn-card:active { transform: scale(0.95); }
+        .theme-btn-card.active-theme { border-color: var(--accent); box-shadow: 0 0 10px var(--accent); }
+
         /* --- TOAST --- */
-        #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 1000; left: 50%; bottom: 30px; transform: translateX(-50%); font-weight: bold; box-shadow: 0px 4px 12px rgba(0,0,0,0.5); opacity: 0; transition: 0.5s; }
+        #toast { visibility: hidden; min-width: 250px; background-color: var(--bg-sec); border: 1px solid var(--accent); color: var(--text-main); text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 1000; left: 50%; bottom: 30px; transform: translateX(-50%); font-weight: bold; box-shadow: 0px 4px 12px rgba(0,0,0,0.5); opacity: 0; transition: 0.5s; }
         #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
-        #toast.offline { background-color: #ed4245; } #toast.online { background-color: #4CAF50; } 
     </style>
 </head>
 <body>
@@ -93,9 +106,12 @@
 <div id="toast">Message here</div>
 
 <div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab('calc')" id="btn-calc">Calculator</button>
-    <button class="tab-btn" onclick="switchTab('conv')" id="btn-conv">Converter</button>
-    <button class="theme-btn" onclick="cycleTheme()">🎨</button>
+    <button class="tab-btn active" onclick="switchTab('calc')" id="btn-calc">Calc</button>
+    <button class="tab-btn" onclick="switchTab('conv')" id="btn-conv">Conv</button>
+    <button class="tab-btn" onclick="switchTab('theme')" id="btn-theme">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zM6.5 11.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-4c-.83 0-1.5-.67-1.5-1.5S9.67 4.5 10.5 4.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+        Themes
+    </button>
 </div>
 
 <div id="tab-calc" class="tab-content active">
@@ -124,7 +140,7 @@
 
 <div id="tab-conv" class="tab-content">
     <div class="conv-group">
-        <input type="text" id="search-units" class="conv-input" placeholder="🔍 Search units (e.g., 'gallons')" onkeyup="renderFromDropdown()">
+        <input type="text" id="search-units" class="conv-input" placeholder="🔍 Search units..." onkeyup="renderFromDropdown()">
     </div>
     <div class="conv-group"><label>Value:</label><input type="number" id="conv-val" class="conv-input" placeholder="0"></div>
     <div class="conv-group"><label>From:</label><select id="conv-from" onchange="updateToDropdown()"></select></div>
@@ -133,168 +149,88 @@
     <div class="result-box" style="text-align:center;" id="conv-result">Result</div>
 </div>
 
+<div id="tab-theme" class="tab-content">
+    <div class="theme-group">
+        <input type="text" id="search-theme-input" class="conv-input" placeholder="🔍 Search 25+ Themes..." onkeyup="renderThemes()">
+    </div>
+    <div class="theme-grid" id="theme-grid">
+        </div>
+</div>
+
 <script>
-    /* --- GLOBALS --- */
+    /* --- GLOBALS & CRASH-PROOF TABS --- */
     let calcHistory = [];
     let liveCurrencyRates = {}; 
     
-    /* --- THEMES ENGINE --- */
-    const themes = ['blurple', 'midnight', 'light'];
-    let currentThemeIndex = 0;
-
-    function cycleTheme() {
-        currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-        let newTheme = themes[currentThemeIndex];
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('appTheme', newTheme);
-        
-        // Match Android Status Bar color to theme
-        let metaColor = newTheme === 'light' ? '#f2f3f5' : (newTheme === 'midnight' ? '#000000' : '#23272a');
-        document.getElementById('meta-theme-color').setAttribute('content', metaColor);
-    }
-    
-    /* --- MASSIVE UNIT EXPANSION --- */
-    const unitCategories = {
-        currency: { USD: "US Dollar", EUR: "Euro", GBP: "British Pound", INR: "Indian Rupee", JPY: "Japanese Yen", AUD: "Australian Dollar", CAD: "Canadian Dollar", CNY: "Chinese Yuan", MXN: "Mexican Peso" },
-        length: { m: "Meters", cm: "Centimeters", mm: "Millimeters", km: "Kilometers", in: "Inches", ft: "Feet", yd: "Yards", mi: "Miles", nm: "Nautical Miles" },
-        weight: { kg: "Kilograms", g: "Grams", mg: "Milligrams", lb: "Pounds", oz: "Ounces", t: "Metric Tonnes" },
-        temperature: { c: "Celsius (°C)", f: "Fahrenheit (°F)", k: "Kelvin (K)" },
-        data: { b: "Bytes", kb: "KB", mb: "MB", gb: "GB", tb: "TB", pb: "Petabytes", kib: "KiB", mib: "MiB", gib: "GiB", tib: "TiB" },
-        time: { s: "Seconds", min: "Minutes", hr: "Hours", day: "Days", wk: "Weeks", yr: "Years" },
-        volume: { l: "Liters", ml: "Milliliters", gal: "US Gallons", qt: "US Quarts", pt: "US Pints", cup: "US Cups", floz: "US Fluid Ounces" },
-        area: { sqm: "Sq Meters", sqkm: "Sq Kilometers", sqmi: "Sq Miles", ac: "Acres", ha: "Hectares", sqft: "Sq Feet", sqin: "Sq Inches" },
-        speed: { mps: "Meters/Sec", kmph: "Km/Hour", mph: "Miles/Hour", kn: "Knots" }
-    };
-
-    const conversionRates = {
-        length: { m: 1, cm: 0.01, mm: 0.001, km: 1000, in: 0.0254, ft: 0.3048, yd: 0.9144, mi: 1609.344, nm: 1852 },
-        weight: { kg: 1, g: 0.001, mg: 0.000001, lb: 0.45359237, oz: 0.02834952, t: 1000 },
-        data: { b: 1, kb: 1e3, mb: 1e6, gb: 1e9, tb: 1e12, pb: 1e15, kib: 1024, mib: 1048576, gib: 1073741824, tib: 1099511627776 },
-        time: { s: 1, min: 60, hr: 3600, day: 86400, wk: 604800, yr: 31536000 },
-        volume: { l: 1, ml: 0.001, gal: 3.78541, qt: 0.946353, pt: 0.473176, cup: 0.24, floz: 0.0295735 },
-        area: { sqm: 1, sqkm: 1e6, sqmi: 2589988.11, ac: 4046.86, ha: 10000, sqft: 0.092903, sqin: 0.00064516 },
-        speed: { mps: 1, kmph: 0.277778, mph: 0.44704, kn: 0.514444 }
-    };
-
-    /* --- INITIALIZATION --- */
-    window.onload = function() {
-        if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
-        
-        // Load Theme
-        let savedTheme = localStorage.getItem('appTheme');
-        if (savedTheme) {
-            currentThemeIndex = themes.indexOf(savedTheme);
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            let metaColor = savedTheme === 'light' ? '#f2f3f5' : (savedTheme === 'midnight' ? '#000000' : '#23272a');
-            document.getElementById('meta-theme-color').setAttribute('content', metaColor);
-        }
-
-        // Load Tabs & History
-        let savedTab = localStorage.getItem('activeTab'); if (savedTab) switchTab(savedTab);
-        let savedHist = localStorage.getItem('calcHistory'); if (savedHist) { calcHistory = JSON.parse(savedHist); renderHistory(); }
-        
-        renderFromDropdown(); 
-        
-        let savedConvVal = localStorage.getItem('convVal');
-        let savedConvFrom = localStorage.getItem('convFrom');
-        let savedConvTo = localStorage.getItem('convTo');
-        
-        if (savedConvVal) document.getElementById('conv-val').value = savedConvVal;
-        if (savedConvFrom) { document.getElementById('conv-from').value = savedConvFrom; updateToDropdown(); if (savedConvTo) document.getElementById('conv-to').value = savedConvTo; }
-
-        let savedRates = localStorage.getItem('savedRates'); if (savedRates) liveCurrencyRates = JSON.parse(savedRates);
-        if (navigator.onLine) fetchCurrencyRates();
-        if (savedConvVal) convertUnits();
-    }
-
-    /* --- TOAST & NETWORK LOGIC --- */
-    function showToast(msg, type) {
-        let t = document.getElementById("toast"); t.innerText = msg; t.className = "show " + type;
-        setTimeout(() => { t.className = t.className.replace("show " + type, ""); }, 4000);
-    }
-    window.addEventListener('offline', () => showToast("Running in offline mode", "offline"));
-    window.addEventListener('online', () => { showToast("Internet Connection Live. Updating Rates", "online"); fetchCurrencyRates(); });
-
-    async function fetchCurrencyRates() {
-        try {
-            let res = await fetch('https://open.er-api.com/v6/latest/USD');
-            let data = await res.json();
-            liveCurrencyRates = data.rates;
-            localStorage.setItem('savedRates', JSON.stringify(liveCurrencyRates));
-        } catch (err) {}
-    }
-
-    /* --- TAB LOGIC --- */
     function switchTab(t) {
-        document.querySelectorAll('.tab-content, .tab-btn').forEach(el => el.classList.remove('active'));
-        document.getElementById('tab-' + t).classList.add('active');
-        document.getElementById('btn-' + t).classList.add('active');
-        localStorage.setItem('activeTab', t);
-    }
-
-    /* --- CALCULATOR LOGIC (WITH NaN FIX) --- */
-    function append(c) { document.getElementById('display').value += c; }
-    function clearDisplay() { document.getElementById('display').value = ''; document.getElementById('result').innerText = '0'; }
-    function deleteLast() { let d = document.getElementById('display'); d.value = d.value.slice(0, -1); }
-    function getCleanExpression() { return document.getElementById('display').value.replace(/x/g, '*').replace(/÷/g, '/').replace(/\^/g, '**').replace(/π/g, 'Math.PI').replace(/sin\(/g, 'Math.sin(').replace(/cos\(/g, 'Math.cos(').replace(/tan\(/g, 'Math.tan(').replace(/√\(/g, 'Math.sqrt('); }
-    
-    function calculateBODMAS() {
         try {
-            let orig = document.getElementById('display').value; let expr = getCleanExpression(); if (!expr) return;
-            let res = eval(expr); 
-            if (isNaN(res) || !isFinite(res)) throw new Error("Invalid");
-            res = Math.round(res * 10000000) / 10000000;
-            document.getElementById('result').innerText = "BODMAS: " + res;
-            calcHistory.push({ expr: orig, res: res, type: 'BODMAS' }); localStorage.setItem('calcHistory', JSON.stringify(calcHistory)); renderHistory();
-        } catch (e) { document.getElementById('result').innerText = "Error"; }
-    }
-    
-    function calculateNoBODMAS() {
-        try {
-            let orig = document.getElementById('display').value; if (!orig) return;
-            let clean = orig.replace(/x/g, '*').replace(/÷/g, '/');
+            // Hide all
+            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
             
-            // Block complex math from seq engine
-            if (clean.includes('sin') || clean.includes('cos') || clean.includes('tan') || clean.includes('√') || clean.includes('π') || clean.includes('^')) {
-                document.getElementById('result').innerText = "Use BODMAS for scientific math."; return;
+            // Show targeted
+            let targetTab = document.getElementById('tab-' + t);
+            let targetBtn = document.getElementById('btn-' + t);
+            
+            if(targetTab && targetBtn) {
+                targetTab.style.display = 'flex';
+                targetBtn.classList.add('active');
+                localStorage.setItem('activeTab', t);
+            } else {
+                // Failsafe
+                document.getElementById('tab-calc').style.display = 'flex';
+                document.getElementById('btn-calc').classList.add('active');
             }
-
-            // FIX: Strip trailing symbols that cause NaN empty spaces
-            clean = clean.replace(/[+\-*/.]+$/, '');
-
-            // FIX: Safe Tokenizer handles infinite decimals & large numbers safely
-            let tokens = clean.match(/(\d+\.?\d*)|([+\-*/])/g);
-            if (!tokens || tokens.length === 0) return;
-
-            let total = parseFloat(tokens[0]);
-            
-            for (let i = 1; i < tokens.length; i += 2) { 
-                let op = tokens[i]; 
-                let nextNum = parseFloat(tokens[i + 1]); 
-                if (isNaN(nextNum)) break; // Prevents crash on "5++5"
-                if (op === '+') total += nextNum; else if (op === '-') total -= nextNum; else if (op === '*') total *= nextNum; else if (op === '/') total /= nextNum; 
-            }
-            
-            if (isNaN(total) || !isFinite(total)) throw new Error("Invalid");
-            total = Math.round(total * 100000000) / 100000000; 
-            document.getElementById('result').innerText = "Sequential: " + total;
-            
-            calcHistory.push({ expr: orig, res: total, type: 'Seq' }); localStorage.setItem('calcHistory', JSON.stringify(calcHistory)); renderHistory();
-        } catch (e) { document.getElementById('result').innerText = "Error"; }
+        } catch(e) { console.error("Tab recovered"); }
     }
 
-    function renderHistory() { let l = document.getElementById('history-list'); l.innerHTML = ''; calcHistory.slice().reverse().forEach(h => { let d = document.createElement('div'); d.className = 'history-item ' + (h.type === 'Seq' ? 'seq' : ''); d.innerHTML = `<span style="color:var(--text-muted); font-size: 0.9rem;">${h.expr} =</span><br/>${h.type}: <strong>${h.res}</strong>`; l.appendChild(d); }); }
-    function clearHistory() { calcHistory = []; localStorage.removeItem('calcHistory'); renderHistory(); }
+    /* --- THEMES ENGINE (25 Themes) --- */
+    const allThemes = [
+        { id: 'dark', name: 'Discord Dark', color: '#5865F2' },
+        { id: 'midnight', name: 'Discord Midnight', color: '#000000' },
+        { id: 'light', name: 'Discord Light', color: '#ffffff' },
+        { id: 'blurple', name: 'Classic Blurple', color: '#23272a' },
+        { id: 'mint-apple', name: 'Mint Apple', color: '#4caf50' },
+        { id: 'citrus-sherbert', name: 'Citrus Sherbert', color: '#ff9800' },
+        { id: 'retro-raincloud', name: 'Retro Raincloud', color: '#607d8b' },
+        { id: 'hanami', name: 'Hanami', color: '#e91e63' },
+        { id: 'sunrise', name: 'Sunrise', color: '#ff5722' },
+        { id: 'cotton-candy', name: 'Cotton Candy', color: '#9c27b0' },
+        { id: 'lofi-vibes', name: 'Lofi Vibes', color: '#9d81d4' },
+        { id: 'desert-khaki', name: 'Desert Khaki', color: '#795548' },
+        { id: 'sunset', name: 'Sunset', color: '#ff7043' },
+        { id: 'chroma-glow', name: 'Chroma Glow', color: '#00e5ff' },
+        { id: 'forest', name: 'Forest', color: '#66bb6a' },
+        { id: 'crimson', name: 'Crimson', color: '#ff5252' },
+        { id: 'midnight-blurple', name: 'Midnight Blurple', color: '#58a6ff' },
+        { id: 'mars', name: 'Mars', color: '#bf360c' },
+        { id: 'dusk', name: 'Dusk', color: '#651fff' },
+        { id: 'under-the-sea', name: 'Under The Sea', color: '#1de9b6' },
+        { id: 'retro-storm', name: 'Retro Storm', color: '#00bcd4' },
+        { id: 'neon-nights', name: 'Neon Nights', color: '#ff00ff' },
+        { id: 'strawberry-lemonade', name: 'Strawberry', color: '#ff1493' },
+        { id: 'aurora', name: 'Aurora', color: '#00e676' },
+        { id: 'sepia', name: 'Sepia', color: '#a0522d' }
+    ];
 
-    /* --- SMART CONVERTER ENGINE --- */
-    function getCategoryOfUnit(u) { for (let c in unitCategories) { if (unitCategories[c].hasOwnProperty(u)) return c; } return null; }
+    function applyTheme(themeId) {
+        document.documentElement.setAttribute('data-theme', themeId);
+        localStorage.setItem('appTheme', themeId);
+        let activeThemeObj = allThemes.find(t => t.id === themeId);
+        if(activeThemeObj) document.getElementById('meta-theme-color').setAttribute('content', activeThemeObj.color);
+        renderThemes(); // Re-render to show active border
+    }
 
-    function renderFromDropdown() {
-        let q = document.getElementById('search-units').value.toLowerCase();
-        let fromSelect = document.getElementById('conv-from');
-        let currentVal = fromSelect.value;
-        fromSelect.innerHTML = '';
-
-        for (let cat in unitCategories) {
-            let group = document.createElement('optgroup'); group.label = cat.toUpperCase();
-            let added = false;
+    function renderThemes() {
+        const grid = document.getElementById('theme-grid');
+        const q = document.getElementById('search-theme-input').value.toLowerCase();
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        grid.innerHTML = '';
+        
+        allThemes.forEach(t => {
+            if (t.name.toLowerCase().includes(q)) {
+                let div = document.createElement('div');
+                div.className = 'theme-btn-card ' + (currentTheme === t.id ? 'active-theme' : '');
+                div.innerHTML = `<span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:${t.color}; margin-right:8px;"></span>${t.name}`;
+                div.onclick = () => applyTheme(t.id);
+           
