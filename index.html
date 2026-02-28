@@ -3,22 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjEyOCIgZmlsbD0iIzU4NjVGMiIvPjxyZWN0IHg9IjEwNiIgeT0iOTYiIHdpZHRoPSIzMDAiIGhlaWdodD0iMzIwIiByeD0iMzIiIGZpbGw9IiMyMzI3MmEiLz48cmVjdCB4PSIxMzYiIHk9IjEzNiIgd2lkdGg9IjI0MCIgaGVpZ2h0PSI3MCIgcng9IjEyIiBmaWxsPSIjMWUxZjIyIi8+PHJlY3QgeD0iMjk2IiB5PSIxNjUiIHdpZHRoPSI2MCIgaGVpZ2h0PSIxMiIgcng9IjYiIGZpbGw9IiM1ODY1RjIiLz48Y2lyY2xlIGN4PSIxNjYiIGN5PSIyNTYiIHI9IjI0IiBmaWxsPSIjNGY1NDVjIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMjU2IiByPSIyNCIgZmlsbD0iIzRmNTQ1YyIvPjxjaXJjbGUgY3g9IjM0NiIgY3k9IjI1NiIgcj0iMjQiIGZpbGw9IiNlZDQyNDUiLz48Y2lyY2xlIGN4PSIxNjYiIGN5PSIzMzYiIHI9IjI0IiBmaWxsPSIjNGY1NDVjIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMzM2IiByPSIyNCIgZmlsbD0iIzRmNTQ1YyIvPjxjaXJjbGUgY3g9IjM0NiIgY3k9IjMzNiIgcj0iMjQiIGZpbGw9IiM0Q0FGNTQiLz48L3N2Zz4=">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" id="meta-theme-color" content="#313338">
-    
     <title>Blurple Pro App</title>
     
     <style>
-        /* --- THE MASTER THEME DICTIONARY --- */
-        /* Core/Discord Themes */
         :root[data-theme="dark"] { --bg-main: #313338; --bg-sec: #2b2d31; --bg-card: #1e1f22; --text-main: #f2f3f5; --text-muted: #b5bac1; --accent: #5865F2; --sci-btn: #4e5058; --border-card: none; }
         :root[data-theme="midnight"] { --bg-main: #000000; --bg-sec: #111214; --bg-card: #000000; --text-main: #f2f3f5; --text-muted: #80848e; --accent: #5865F2; --sci-btn: #2b2d31; --border-card: 1px solid #1e1f22; }
         :root[data-theme="light"] { --bg-main: #ffffff; --bg-sec: #f2f3f5; --bg-card: #e3e5e8; --text-main: #060607; --text-muted: #4e5058; --accent: #5865F2; --sci-btn: #d4d7dc; --border-card: none; }
         :root[data-theme="blurple"] { --bg-main: #23272a; --bg-sec: #1e1f22; --bg-card: #2c2f33; --text-main: #ffffff; --text-muted: #8e9297; --accent: #5865F2; --sci-btn: #4f545c; --border-card: none; }
-        /* New Requested Themes */
         :root[data-theme="mint-apple"] { --bg-main: #e8f5e9; --bg-sec: #c8e6c9; --bg-card: #a5d6a7; --text-main: #1b5e20; --text-muted: #2e7d32; --accent: #4caf50; --sci-btn: #81c784; --border-card: none; }
         :root[data-theme="citrus-sherbert"] { --bg-main: #fff3e0; --bg-sec: #ffe0b2; --bg-card: #ffcc80; --text-main: #e65100; --text-muted: #ef6c00; --accent: #ff9800; --sci-btn: #ffb74d; --border-card: none; }
         :root[data-theme="retro-raincloud"] { --bg-main: #eceff1; --bg-sec: #cfd8dc; --bg-card: #b0bec5; --text-main: #263238; --text-muted: #455a64; --accent: #607d8b; --sci-btn: #90a4ae; --border-card: none; }
@@ -41,12 +36,10 @@
         :root[data-theme="aurora"] { --bg-main: #00332a; --bg-sec: #001f1a; --bg-card: #004d40; --text-main: #e0f2f1; --text-muted: #69f0ae; --accent: #00e676; --sci-btn: #00695c; --border-card: none; }
         :root[data-theme="sepia"] { --bg-main: #f4ecd8; --bg-sec: #e8dcc4; --bg-card: #d5c4a1; --text-main: #5c4033; --text-muted: #8b5a2b; --accent: #a0522d; --sci-btn: #c4b087; --border-card: none; }
 
-        /* --- NATIVE APP FIXES --- */
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; transition: background 0.3s, color 0.3s, border 0.3s; }
         button, .tab-btn { user-select: none; -webkit-user-select: none; touch-action: manipulation; }
         input, select { user-select: auto; -webkit-user-select: auto; }
 
-        /* --- BASE STYLING --- */
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg-main); margin: 0; height: 100dvh; display: flex; flex-direction: column; color: var(--text-main); overflow: hidden; }
         
         .tab-bar { display: flex; background: var(--bg-sec); padding: 5px; flex-shrink: 0; align-items: center;}
@@ -55,9 +48,8 @@
         .tab-btn svg { width: 18px; height: 18px; fill: currentColor; }
         
         .tab-content { display: none; flex: 1; flex-direction: column; padding: 20px; overflow-y: auto; }
-        .tab-content.active { display: flex; }
+        .tab-content.active { display: flex; } /* TABS NOW RELY STRICTLY ON THIS CSS CLASS */
 
-        /* --- CALCULATOR UI --- */
         #display { width: 100%; padding: 20px; margin-bottom: 10px; font-size: 2rem; background: var(--bg-sec); border: var(--border-card); color: var(--text-main); border-radius: 12px; text-align: right; outline: none; }
         #display:focus { border: 2px solid var(--accent); padding: 18px; }
         .result-box { padding: 15px; margin-bottom: 20px; border-radius: 12px; background: var(--bg-card); font-size: 1.5rem; font-weight: bold; border: var(--border-card); border-left: 5px solid var(--accent); text-align: right; min-height: 30px; }
@@ -75,14 +67,12 @@
         .btn-bodmas { background: #23a559; color: white; }
         .btn-no-bodmas { background: var(--accent); color: var(--bg-main); }
 
-        /* --- HISTORY UI --- */
         .history-container { background: var(--bg-sec); border: var(--border-card); border-radius: 12px; padding: 15px; display: flex; flex-direction: column; margin-bottom: 20px; }
         .history-header { display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--text-muted); font-weight: bold; }
         .btn-clear-history { background: transparent; color: #ed4245; border: none; cursor: pointer; font-size: 0.9rem; font-weight: bold; }
         #history-list { display: flex; flex-direction: column; gap: 10px; }
         .history-item { background: var(--bg-card); padding: 10px; border-radius: 8px; font-size: 1.1rem; text-align: right; border-left: 4px solid var(--accent); }
 
-        /* --- CONVERTER & THEMES UI --- */
         .conv-group, .theme-group { margin-bottom: 15px; }
         .conv-group label { display: block; margin-bottom: 8px; color: var(--text-muted); font-weight: bold; }
         select, input.conv-input { width: 100%; padding: 15px; font-size: 1.2rem; background: var(--bg-card); border: var(--border-card); color: var(--text-main); border-radius: 8px; outline: none; }
@@ -96,7 +86,6 @@
         .theme-btn-card:active { transform: scale(0.95); }
         .theme-btn-card.active-theme { border-color: var(--accent); box-shadow: 0 0 10px var(--accent); }
 
-        /* --- TOAST --- */
         #toast { visibility: hidden; min-width: 250px; background-color: var(--bg-sec); border: 1px solid var(--accent); color: var(--text-main); text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 1000; left: 50%; bottom: 30px; transform: translateX(-50%); font-weight: bold; box-shadow: 0px 4px 12px rgba(0,0,0,0.5); opacity: 0; transition: 0.5s; }
         #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
     </style>
@@ -129,7 +118,7 @@
     
     <div class="calc-row">
         <button class="btn-calc btn-bodmas" onclick="calculateBODMAS()">= BODMAS</button>
-        <button class="btn-calc btn-no-bodmas" onclick="calculateNoBODMAS()">= Sequential</button>
+        <button class="btn-calc btn-no-bodmas" onclick="calculateNoBODMAS()">= Seq</button>
     </div>
     
     <div class="history-container">
@@ -151,79 +140,61 @@
 
 <div id="tab-theme" class="tab-content">
     <div class="theme-group">
-        <input type="text" id="search-theme-input" class="conv-input" placeholder="🔍 Search 25+ Themes..." onkeyup="renderThemes()">
+        <input type="text" id="search-theme-input" class="conv-input" placeholder="🔍 Search Themes..." onkeyup="renderThemes()">
     </div>
-    <div class="theme-grid" id="theme-grid">
-        </div>
+    <div class="theme-grid" id="theme-grid"></div>
 </div>
 
 <script>
-    /* --- GLOBALS & CRASH-PROOF TABS --- */
-    let calcHistory = [];
-    let liveCurrencyRates = {}; 
-    
-    function switchTab(t) {
-        try {
-            // Hide all
-            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            
-            // Show targeted
-            let targetTab = document.getElementById('tab-' + t);
-            let targetBtn = document.getElementById('btn-' + t);
-            
-            if(targetTab && targetBtn) {
-                targetTab.style.display = 'flex';
-                targetBtn.classList.add('active');
-                localStorage.setItem('activeTab', t);
-            } else {
-                // Failsafe
-                document.getElementById('tab-calc').style.display = 'flex';
-                document.getElementById('btn-calc').classList.add('active');
-            }
-        } catch(e) { console.error("Tab recovered"); }
+    /* --- PURE CLASS-BASED TAB SWITCHING --- */
+    function switchTab(tabId) {
+        // Remove active class from all tabs and buttons
+        const allContents = document.querySelectorAll('.tab-content');
+        const allButtons = document.querySelectorAll('.tab-btn');
+        
+        for(let i = 0; i < allContents.length; i++) {
+            allContents[i].classList.remove('active');
+            allButtons[i].classList.remove('active');
+        }
+        
+        // Add active class exactly to what we clicked
+        const targetTab = document.getElementById('tab-' + tabId);
+        const targetBtn = document.getElementById('btn-' + tabId);
+        
+        if (targetTab && targetBtn) {
+            targetTab.classList.add('active');
+            targetBtn.classList.add('active');
+            localStorage.setItem('activeTab', tabId);
+        } else {
+            document.getElementById('tab-calc').classList.add('active');
+            document.getElementById('btn-calc').classList.add('active');
+        }
     }
 
-    /* --- THEMES ENGINE (25 Themes) --- */
+    let calcHistory = [];
+    let liveCurrencyRates = {}; 
+
     const allThemes = [
-        { id: 'dark', name: 'Discord Dark', color: '#5865F2' },
-        { id: 'midnight', name: 'Discord Midnight', color: '#000000' },
-        { id: 'light', name: 'Discord Light', color: '#ffffff' },
-        { id: 'blurple', name: 'Classic Blurple', color: '#23272a' },
-        { id: 'mint-apple', name: 'Mint Apple', color: '#4caf50' },
-        { id: 'citrus-sherbert', name: 'Citrus Sherbert', color: '#ff9800' },
-        { id: 'retro-raincloud', name: 'Retro Raincloud', color: '#607d8b' },
-        { id: 'hanami', name: 'Hanami', color: '#e91e63' },
-        { id: 'sunrise', name: 'Sunrise', color: '#ff5722' },
-        { id: 'cotton-candy', name: 'Cotton Candy', color: '#9c27b0' },
-        { id: 'lofi-vibes', name: 'Lofi Vibes', color: '#9d81d4' },
-        { id: 'desert-khaki', name: 'Desert Khaki', color: '#795548' },
-        { id: 'sunset', name: 'Sunset', color: '#ff7043' },
-        { id: 'chroma-glow', name: 'Chroma Glow', color: '#00e5ff' },
-        { id: 'forest', name: 'Forest', color: '#66bb6a' },
-        { id: 'crimson', name: 'Crimson', color: '#ff5252' },
-        { id: 'midnight-blurple', name: 'Midnight Blurple', color: '#58a6ff' },
-        { id: 'mars', name: 'Mars', color: '#bf360c' },
-        { id: 'dusk', name: 'Dusk', color: '#651fff' },
-        { id: 'under-the-sea', name: 'Under The Sea', color: '#1de9b6' },
-        { id: 'retro-storm', name: 'Retro Storm', color: '#00bcd4' },
-        { id: 'neon-nights', name: 'Neon Nights', color: '#ff00ff' },
-        { id: 'strawberry-lemonade', name: 'Strawberry', color: '#ff1493' },
-        { id: 'aurora', name: 'Aurora', color: '#00e676' },
-        { id: 'sepia', name: 'Sepia', color: '#a0522d' }
+        { id: 'dark', name: 'Discord Dark', color: '#5865F2' }, { id: 'midnight', name: 'Discord Midnight', color: '#000000' }, { id: 'light', name: 'Discord Light', color: '#ffffff' }, { id: 'blurple', name: 'Classic Blurple', color: '#23272a' },
+        { id: 'mint-apple', name: 'Mint Apple', color: '#4caf50' }, { id: 'citrus-sherbert', name: 'Citrus Sherbert', color: '#ff9800' }, { id: 'retro-raincloud', name: 'Retro Raincloud', color: '#607d8b' }, { id: 'hanami', name: 'Hanami', color: '#e91e63' },
+        { id: 'sunrise', name: 'Sunrise', color: '#ff5722' }, { id: 'cotton-candy', name: 'Cotton Candy', color: '#9c27b0' }, { id: 'lofi-vibes', name: 'Lofi Vibes', color: '#9d81d4' }, { id: 'desert-khaki', name: 'Desert Khaki', color: '#795548' },
+        { id: 'sunset', name: 'Sunset', color: '#ff7043' }, { id: 'chroma-glow', name: 'Chroma Glow', color: '#00e5ff' }, { id: 'forest', name: 'Forest', color: '#66bb6a' }, { id: 'crimson', name: 'Crimson', color: '#ff5252' },
+        { id: 'midnight-blurple', name: 'Midnight Blurple', color: '#58a6ff' }, { id: 'mars', name: 'Mars', color: '#bf360c' }, { id: 'dusk', name: 'Dusk', color: '#651fff' }, { id: 'under-the-sea', name: 'Under The Sea', color: '#1de9b6' },
+        { id: 'retro-storm', name: 'Retro Storm', color: '#00bcd4' }, { id: 'neon-nights', name: 'Neon Nights', color: '#ff00ff' }, { id: 'strawberry-lemonade', name: 'Strawberry', color: '#ff1493' }, { id: 'aurora', name: 'Aurora', color: '#00e676' }, { id: 'sepia', name: 'Sepia', color: '#a0522d' }
     ];
 
     function applyTheme(themeId) {
         document.documentElement.setAttribute('data-theme', themeId);
         localStorage.setItem('appTheme', themeId);
-        let activeThemeObj = allThemes.find(t => t.id === themeId);
-        if(activeThemeObj) document.getElementById('meta-theme-color').setAttribute('content', activeThemeObj.color);
-        renderThemes(); // Re-render to show active border
+        let activeObj = allThemes.find(t => t.id === themeId);
+        if(activeObj) document.getElementById('meta-theme-color').setAttribute('content', activeObj.color);
+        renderThemes(); 
     }
 
     function renderThemes() {
         const grid = document.getElementById('theme-grid');
-        const q = document.getElementById('search-theme-input').value.toLowerCase();
+        const searchInput = document.getElementById('search-theme-input');
+        const q = searchInput ? searchInput.value.toLowerCase() : "";
         const currentTheme = document.documentElement.getAttribute('data-theme');
         grid.innerHTML = '';
         
@@ -233,4 +204,12 @@
                 div.className = 'theme-btn-card ' + (currentTheme === t.id ? 'active-theme' : '');
                 div.innerHTML = `<span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:${t.color}; margin-right:8px;"></span>${t.name}`;
                 div.onclick = () => applyTheme(t.id);
-           
+                grid.appendChild(div);
+            }
+        });
+    }
+
+    const unitCategories = {
+        currency: { USD: "US Dollar", EUR: "Euro", GBP: "Pound", INR: "Rupee", JPY: "Yen", AUD: "AUD", CAD: "CAD" },
+        length: { m: "Meters", cm: "Centimeters", mm: "Millimeters", km: "Kilometers", in: "Inches", ft: "Feet", yd: "Yards", mi: "Miles" },
+        weight: { kg: "Kilograms", g: "Grams", mg: "Milligrams", lb: "Pounds", oz: "Ounces
