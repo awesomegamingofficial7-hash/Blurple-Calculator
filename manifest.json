@@ -1,17 +1,32 @@
 {
-  "short_name": "BlurpleCalc",
+  "id": "/Blurple-Calculator/",
   "name": "Blurple Pro Calculator",
+  "short_name": "Blurple Calculator Pro",
+  "description": "A sleek, dual-logic mathematical calculator and smart unit converter.",
+  "start_url": "https://blurple-calculator.github.io/Blurple-Calculator/",
+  "scope": "/Blurple-Calculator/",
+  "display": "standalone",
+  "background_color": "#23272a",
+  "theme_color": "#5865F2",
+  "orientation": "portrait",
   "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/5064/5064943.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/5064/5064943.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
     {
       "src": "./icon.svg",
       "type": "image/svg+xml",
-      "sizes": "512x512",
-      "purpose": "any maskable"
+      "sizes": "512x512"
     }
   ],
-  "start_url": "./index.html",
-  "background_color": "#23272a",
-  "display": "standalone",
-  "scope": "./",
-  "theme_color": "#5865F2"
+  "lang": "en"
 }
