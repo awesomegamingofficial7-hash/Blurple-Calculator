@@ -1,56 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="blurple">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjEyOCIgZmlsbD0iIzU4NjVGMiIvPjxyZWN0IHg9IjEwNiIgeT0iOTYiIHdpZHRoPSIzMDAiIGhlaWdodD0iMzIwIiByeD0iMzIiIGZpbGw9IiMyMzI3MmEiLz48cmVjdCB4PSIxMzYiIHk9IjEzNiIgd2lkdGg9IjI0MCIgaGVpZ2h0PSI3MCIgcng9IjEyIiBmaWxsPSIjMWUxZjIyIi8+PHJlY3QgeD0iMjk2IiB5PSIxNjUiIHdpZHRoPSI2MCIgaGVpZ2h0PSIxMiIgcng9IjYiIGZpbGw9IiM1ODY1RjIiLz48Y2lyY2xlIGN4PSIxNjYiIGN5PSIyNTYiIHI9IjI0IiBmaWxsPSIjNGY1NDVjIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMjU2IiByPSIyNCIgZmlsbD0iIzRmNTQ1YyIvPjxjaXJjbGUgY3g9IjM0NiIgY3k9IjI1NiIgcj0iMjQiIGZpbGw9IiNlZDQyNDUiLz48Y2lyY2xlIGN4PSIxNjYiIGN5PSIzMzYiIHI9IjI0IiBmaWxsPSIjNGY1NDVjIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMzM2IiByPSIyNCIgZmlsbD0iIzRmNTQ1YyIvPjxjaXJjbGUgY3g9IjM0NiIgY3k9IjMzNiIgcj0iMjQiIGZpbGw9IiM0Q0FGNTQiLz48L3N2Zz4=">
+    
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#23272a">
+    <meta name="theme-color" id="meta-theme-color" content="#23272a">
     
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjEyOCIgZmlsbD0iIzU4NjVGMiIvPjxyZWN0IHg9IjEwNiIgeT0iOTYiIHdpZHRoPSIzMDAiIGhlaWdodD0iMzIwIiByeD0iMzIiIGZpbGw9IiMyMzI3MmEiLz48cmVjdCB4PSIxMzYiIHk9IjEzNiIgd2lkdGg9IjI0MCIgaGVpZ2h0PSI3MCIgcng9IjEyIiBmaWxsPSIjMWUxZjIyIi8+PHJlY3QgeD0iMjk2IiB5PSIxNjUiIHdpZHRoPSI2MCIgaGVpZ2h0PSIxMiIgcng9IjYiIGZpbGw9IiM1ODY1RjIiLz48Y2lyY2xlIGN4PSIxNjYiIGN5PSIyNTYiIHI9IjI0IiBmaWxsPSIjNGY1NDVjIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMjU2IiByPSIyNCIgZmlsbD0iIzRmNTQ1YyIvPjxjaXJjbGUgY3g9IjM0NiIgY3k9IjI1NiIgcj0iMjQiIGZpbGw9IiNlZDQyNDUiLz48Y2lyY2xlIGN4PSIxNjYiIGN5PSIzMzYiIHI9IjI0IiBmaWxsPSIjNGY1NDVjIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMzM2IiByPSIyNCIgZmlsbD0iIzRmNTQ1YyIvPjxjaXJjbGUgY3g9IjM0NiIgY3k9IjMzNiIgcj0iMjQiIGZpbGw9IiM0Q0FGNTQiLz48L3N2Zz4=">
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjEyOCIgZmlsbD0iIzU4NjVGMiIvPjxyZWN0IHg9IjEwNiIgeT0iOTYiIHdpZHRoPSIzMDAiIGhlaWdodD0iMzIwIiByeD0iMzIiIGZpbGw9IiMyMzI3MmEiLz48cmVjdCB4PSIxMzYiIHk9IjEzNiIgd2lkdGg9IjI0MCIgaGVpZ2h0PSI3MCIgcng9IjEyIiBmaWxsPSIjMWUxZjIyIi8+PHJlY3QgeD0iMjk2IiB5PSIxNjUiIHdpZHRoPSI2MCIgaGVpZ2h0PSIxMiIgcng9IjYiIGZpbGw9IiM1ODY1RjIiLz48Y2lyY2xlIGN4PSIxNjYiIGN5PSIyNTYiIHI9IjI0IiBmaWxsPSIjNGY1NDVjIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMjU2IiByPSIyNCIgZmlsbD0iIzRmNTQ1YyIvPjxjaXJjbGUgY3g9IjM0NiIgY3k9IjI1NiIgcj0iMjQiIGZpbGw9IiNlZDQyNDUiLz48Y2lyY2xlIGN4PSIxNjYiIGN5PSIzMzYiIHI9IjI0IiBmaWxsPSIjNGY1NDVjIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMzM2IiByPSIyNCIgZmlsbD0iIzRmNTQ1YyIvPjxjaXJjbGUgY3g9IjM0NiIgY3k9IjMzNiIgcj0iMjQiIGZpbGw9IiM0Q0FGNTQiLz48L3N2Zz4=">
-
     <title>Blurple Pro App</title>
     
     <style>
-        /* Native App Feel Fixes */
-        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+        /* --- THEME VARIABLES --- */
+        :root[data-theme="blurple"] {
+            --bg-main: #23272a; --bg-sec: #1e1f22; --bg-card: #2c2f33;
+            --text-main: #ffffff; --text-muted: #8e9297;
+            --accent: #5865F2; --sci-btn: #4f545c;
+        }
+        :root[data-theme="midnight"] {
+            --bg-main: #000000; --bg-sec: #121212; --bg-card: #1e1e1e;
+            --text-main: #e3e3e3; --text-muted: #a0a0a0;
+            --accent: #BB86FC; --sci-btn: #333333;
+        }
+        :root[data-theme="light"] {
+            --bg-main: #f2f3f5; --bg-sec: #ffffff; --bg-card: #e3e5e8;
+            --text-main: #2e3338; --text-muted: #5c5f63;
+            --accent: #5865F2; --sci-btn: #d4d7dc;
+        }
+
+        /* --- NATIVE APP FIXES --- */
+        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
         button, .tab-btn { user-select: none; -webkit-user-select: none; touch-action: manipulation; }
+        input, select { user-select: auto; -webkit-user-select: auto; }
+
+        /* --- BASE STYLING --- */
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg-main); margin: 0; height: 100dvh; display: flex; flex-direction: column; color: var(--text-main); overflow: hidden; }
         
-        body { font-family: 'Segoe UI', sans-serif; background: #23272a; margin: 0; height: 100dvh; display: flex; flex-direction: column; color: #ffffff; overflow: hidden; }
-        .tab-bar { display: flex; background: #1e1f22; padding: 10px; flex-shrink: 0; }
-        .tab-btn { flex: 1; padding: 15px; background: transparent; border: none; color: #8e9297; font-size: 1.1rem; font-weight: bold; cursor: pointer; border-bottom: 3px solid transparent; }
-        .tab-btn.active { color: #ffffff; border-bottom: 3px solid #5865F2; }
+        .tab-bar { display: flex; background: var(--bg-sec); padding: 10px; flex-shrink: 0; align-items: center;}
+        .tab-btn { flex: 1; padding: 15px; background: transparent; border: none; color: var(--text-muted); font-size: 1.1rem; font-weight: bold; cursor: pointer; border-bottom: 3px solid transparent; }
+        .tab-btn.active { color: var(--text-main); border-bottom: 3px solid var(--accent); }
+        .theme-btn { background: transparent; border: none; font-size: 1.5rem; padding: 10px; cursor: pointer; border-radius: 50%; }
+        
         .tab-content { display: none; flex: 1; flex-direction: column; padding: 20px; overflow-y: auto; }
         .tab-content.active { display: flex; }
 
-        #display { width: 100%; padding: 20px; margin-bottom: 10px; font-size: 2rem; background: #1e1f22; border: none; color: #ffffff; border-radius: 12px; text-align: right; outline: none; }
-        #display:focus { border: 2px solid #5865F2; }
-        .result-box { padding: 15px; margin-bottom: 20px; border-radius: 12px; background: #2c2f33; font-size: 1.5rem; font-weight: bold; border-left: 5px solid #5865F2; text-align: right; min-height: 30px; }
+        /* --- CALCULATOR UI --- */
+        #display { width: 100%; padding: 20px; margin-bottom: 10px; font-size: 2rem; background: var(--bg-sec); border: none; color: var(--text-main); border-radius: 12px; text-align: right; outline: none; }
+        #display:focus { border: 2px solid var(--accent); padding: 18px; }
+        .result-box { padding: 15px; margin-bottom: 20px; border-radius: 12px; background: var(--bg-card); font-size: 1.5rem; font-weight: bold; border-left: 5px solid var(--accent); text-align: right; min-height: 30px; }
+        
         .keypad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 15px; }
-        button.key { background: #2c2f33; border: none; border-radius: 12px; color: white; font-size: 1.2rem; cursor: pointer; font-weight: bold; padding: 15px 0; transition: transform 0.1s; }
-        button.key:active { background: #1e1f22; transform: scale(0.95); }
-        button.key.sci { background: #4f545c; font-size: 1rem; }
-        button.key.op { background: #5865F2; }
-        button.key.action { background: #ed4245; }
+        button.key { background: var(--bg-card); border: none; border-radius: 12px; color: var(--text-main); font-size: 1.2rem; cursor: pointer; font-weight: bold; padding: 15px 0; }
+        button.key:active { transform: scale(0.95); opacity: 0.8; }
+        button.key.sci { background: var(--sci-btn); font-size: 1rem; }
+        button.key.op { background: var(--accent); color: white;}
+        button.key.action { background: #ed4245; color: white;}
+        
         .calc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
         .btn-calc { padding: 20px; font-size: 1.1rem; font-weight: bold; border: none; border-radius: 12px; color: white; cursor: pointer; }
-        .btn-bodmas { background: #4CAF50; } .btn-no-bodmas { background: #5865F2; }
+        .btn-calc:active { transform: scale(0.98); }
+        .btn-bodmas { background: #4CAF50; } 
+        .btn-no-bodmas { background: var(--accent); }
 
-        .history-container { background: #1e1f22; border-radius: 12px; padding: 15px; margin-bottom: 20px; }
-        .history-header { display: flex; justify-content: space-between; margin-bottom: 10px; color: #8e9297; }
-        .history-item { background: #2c2f33; padding: 10px; border-radius: 8px; font-size: 1.1rem; text-align: right; border-left: 4px solid #5865F2; margin-bottom: 10px; }
-        .history-item.seq { border-left-color: #2196F3; }
+        /* --- HISTORY UI --- */
+        .history-container { background: var(--bg-sec); border-radius: 12px; padding: 15px; display: flex; flex-direction: column; margin-bottom: 20px; }
+        .history-header { display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--text-muted); font-weight: bold; }
+        .btn-clear-history { background: transparent; color: #ed4245; border: none; cursor: pointer; font-size: 0.9rem; font-weight: bold; }
+        #history-list { display: flex; flex-direction: column; gap: 10px; }
+        .history-item { background: var(--bg-card); padding: 10px; border-radius: 8px; font-size: 1.1rem; text-align: right; border-left: 4px solid var(--accent); }
+        .history-item.seq { border-left-color: #2196F3; } 
 
+        /* --- CONVERTER UI --- */
         .conv-group { margin-bottom: 15px; }
-        select, .conv-input { width: 100%; padding: 15px; font-size: 1.2rem; background: #2c2f33; border: none; color: white; border-radius: 8px; box-sizing: border-box; outline: none; }
-        .btn-convert { width: 100%; padding: 15px; background: #5865F2; border: none; color: white; font-size: 1.2rem; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .conv-group label { display: block; margin-bottom: 8px; color: var(--text-muted); font-weight: bold; }
+        select, input.conv-input { width: 100%; padding: 15px; font-size: 1.2rem; background: var(--bg-card); border: none; color: var(--text-main); border-radius: 8px; outline: none; }
+        input.conv-input:focus { border: 2px solid var(--accent); padding: 13px;}
+        optgroup { background: var(--bg-sec); color: var(--text-muted); font-weight: bold; }
+        option { background: var(--bg-card); color: var(--text-main); }
+        .btn-convert { width: 100%; padding: 15px; background: var(--accent); border: none; color: white; font-size: 1.2rem; border-radius: 8px; font-weight: bold; margin-bottom: 30px; cursor: pointer;}
         
-        #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 1000; left: 50%; bottom: 30px; transform: translateX(-50%); opacity: 0; transition: 0.5s; }
+        /* --- TOAST --- */
+        #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 1000; left: 50%; bottom: 30px; transform: translateX(-50%); font-weight: bold; box-shadow: 0px 4px 12px rgba(0,0,0,0.5); opacity: 0; transition: 0.5s; }
         #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
-        #toast.offline { background-color: #ed4245; } #toast.online { background-color: #4CAF50; }
+        #toast.offline { background-color: #ed4245; } #toast.online { background-color: #4CAF50; } 
     </style>
 </head>
 <body>
@@ -60,171 +95,206 @@
 <div class="tab-bar">
     <button class="tab-btn active" onclick="switchTab('calc')" id="btn-calc">Calculator</button>
     <button class="tab-btn" onclick="switchTab('conv')" id="btn-conv">Converter</button>
+    <button class="theme-btn" onclick="cycleTheme()">🎨</button>
 </div>
 
 <div id="tab-calc" class="tab-content active">
     <input type="text" id="display" readonly placeholder="0">
     <div class="result-box" id="result">0</div>
+    
     <div class="keypad">
-        <button class="key sci" onclick="append('sin(')">sin</button><button class="key sci" onclick="append('cos(')">cos</button><button class="key sci" onclick="append('tan(')">tan</button><button class="key sci" onclick="append('√(')">√</button>
-        <button class="key action" onclick="clearDisplay()">C</button><button class="key sci" onclick="append('^')">^</button><button class="key sci" onclick="append('π')">π</button><button class="key op" onclick="append('÷')">÷</button>
-        <button class="key" onclick="append('7')">7</button><button class="key" onclick="append('8')">8</button><button class="key" onclick="append('9')">9</button><button class="key op" onclick="append('x')">x</button>
-        <button class="key" onclick="append('4')">4</button><button class="key" onclick="append('5')">5</button><button class="key" onclick="append('6')">6</button><button class="key op" onclick="append('-')">-</button>
-        <button class="key" onclick="append('1')">1</button><button class="key" onclick="append('2')">2</button><button class="key" onclick="append('3')">3</button><button class="key op" onclick="append('+')">+</button>
-        <button class="key" onclick="append('0')">0</button><button class="key" onclick="append('.')">.</button><button class="key" onclick="append(')')">)</button><button class="key action" onclick="deleteLast()">DEL</button>
+        <button class="key sci" onclick="append('sin(')">sin</button> <button class="key sci" onclick="append('cos(')">cos</button> <button class="key sci" onclick="append('tan(')">tan</button> <button class="key sci" onclick="append('√(')">√</button>
+        <button class="key action" onclick="clearDisplay()">C</button> <button class="key sci" onclick="append('^')">^</button> <button class="key sci" onclick="append('π')">π</button> <button class="key op" onclick="append('÷')">÷</button>
+        <button class="key" onclick="append('7')">7</button> <button class="key" onclick="append('8')">8</button> <button class="key" onclick="append('9')">9</button> <button class="key op" onclick="append('x')">x</button>
+        <button class="key" onclick="append('4')">4</button> <button class="key" onclick="append('5')">5</button> <button class="key" onclick="append('6')">6</button> <button class="key op" onclick="append('-')">-</button>
+        <button class="key" onclick="append('1')">1</button> <button class="key" onclick="append('2')">2</button> <button class="key" onclick="append('3')">3</button> <button class="key op" onclick="append('+')">+</button>
+        <button class="key" onclick="append('0')">0</button> <button class="key" onclick="append('.')">.</button> <button class="key" onclick="append(')')">)</button> <button class="key action" onclick="deleteLast()">DEL</button>
     </div>
+    
     <div class="calc-row">
         <button class="btn-calc btn-bodmas" onclick="calculateBODMAS()">= BODMAS</button>
-        <button class="btn-calc btn-no-bodmas" onclick="calculateNoBODMAS()">= Seq</button>
+        <button class="btn-calc btn-no-bodmas" onclick="calculateNoBODMAS()">= Sequential</button>
     </div>
+    
     <div class="history-container">
-        <div class="history-header"><span>History</span><button style="background:none; border:none; color:#ed4245;" onclick="clearHistory()">Clear</button></div>
+        <div class="history-header"><span>History</span><button class="btn-clear-history" onclick="clearHistory()">Clear</button></div>
         <div id="history-list"></div>
     </div>
 </div>
 
 <div id="tab-conv" class="tab-content">
-    <div class="conv-group"><input type="text" id="search-units" class="conv-input" placeholder="🔍 Search units..." onkeyup="renderFromDropdown()"></div>
+    <div class="conv-group">
+        <input type="text" id="search-units" class="conv-input" placeholder="🔍 Search units (e.g., 'gallons')" onkeyup="renderFromDropdown()">
+    </div>
     <div class="conv-group"><label>Value:</label><input type="number" id="conv-val" class="conv-input" placeholder="0"></div>
     <div class="conv-group"><label>From:</label><select id="conv-from" onchange="updateToDropdown()"></select></div>
     <div class="conv-group"><label>To:</label><select id="conv-to"></select></div>
     <button class="btn-convert" onclick="convertUnits()">Convert</button>
-    <div class="result-box" style="text-align:center; margin-top:20px;" id="conv-result">Result</div>
+    <div class="result-box" style="text-align:center;" id="conv-result">Result</div>
 </div>
 
 <script>
+    /* --- GLOBALS --- */
     let calcHistory = [];
-    let liveCurrencyRates = {};
+    let liveCurrencyRates = {}; 
+    
+    /* --- THEMES ENGINE --- */
+    const themes = ['blurple', 'midnight', 'light'];
+    let currentThemeIndex = 0;
+
+    function cycleTheme() {
+        currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+        let newTheme = themes[currentThemeIndex];
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('appTheme', newTheme);
+        
+        // Match Android Status Bar color to theme
+        let metaColor = newTheme === 'light' ? '#f2f3f5' : (newTheme === 'midnight' ? '#000000' : '#23272a');
+        document.getElementById('meta-theme-color').setAttribute('content', metaColor);
+    }
+    
+    /* --- MASSIVE UNIT EXPANSION --- */
     const unitCategories = {
-        currency: { USD: "US Dollar", EUR: "Euro", GBP: "Pound", INR: "Rupee", JPY: "Yen" },
-        length: { m: "Meters", cm: "Centimeters", km: "Kilometers", in: "Inches", ft: "Feet", mi: "Miles" },
-        weight: { kg: "Kilograms", g: "Grams", lb: "Pounds", oz: "Ounces" },
-        data: { b: "Bytes", kb: "KB", mb: "MB", gb: "GB", tb: "TB", kib: "KiB", mib: "MiB", gib: "GiB" },
-        time: { s: "Seconds", min: "Minutes", hr: "Hours", day: "Days" }
-    };
-    const conversionRates = {
-        length: { m: 1, cm: 0.01, km: 1000, in: 0.0254, ft: 0.3048, mi: 1609.34 },
-        weight: { kg: 1, g: 0.001, lb: 0.4535, oz: 0.0283 },
-        data: { b: 1, kb: 1e3, mb: 1e6, gb: 1e9, tb: 1e12, kib: 1024, mib: 1048576, gib: 1073741824 },
-        time: { s: 1, min: 60, hr: 3600, day: 86400 }
+        currency: { USD: "US Dollar", EUR: "Euro", GBP: "British Pound", INR: "Indian Rupee", JPY: "Japanese Yen", AUD: "Australian Dollar", CAD: "Canadian Dollar", CNY: "Chinese Yuan", MXN: "Mexican Peso" },
+        length: { m: "Meters", cm: "Centimeters", mm: "Millimeters", km: "Kilometers", in: "Inches", ft: "Feet", yd: "Yards", mi: "Miles", nm: "Nautical Miles" },
+        weight: { kg: "Kilograms", g: "Grams", mg: "Milligrams", lb: "Pounds", oz: "Ounces", t: "Metric Tonnes" },
+        temperature: { c: "Celsius (°C)", f: "Fahrenheit (°F)", k: "Kelvin (K)" },
+        data: { b: "Bytes", kb: "KB", mb: "MB", gb: "GB", tb: "TB", pb: "Petabytes", kib: "KiB", mib: "MiB", gib: "GiB", tib: "TiB" },
+        time: { s: "Seconds", min: "Minutes", hr: "Hours", day: "Days", wk: "Weeks", yr: "Years" },
+        volume: { l: "Liters", ml: "Milliliters", gal: "US Gallons", qt: "US Quarts", pt: "US Pints", cup: "US Cups", floz: "US Fluid Ounces" },
+        area: { sqm: "Sq Meters", sqkm: "Sq Kilometers", sqmi: "Sq Miles", ac: "Acres", ha: "Hectares", sqft: "Sq Feet", sqin: "Sq Inches" },
+        speed: { mps: "Meters/Sec", kmph: "Km/Hour", mph: "Miles/Hour", kn: "Knots" }
     };
 
+    const conversionRates = {
+        length: { m: 1, cm: 0.01, mm: 0.001, km: 1000, in: 0.0254, ft: 0.3048, yd: 0.9144, mi: 1609.344, nm: 1852 },
+        weight: { kg: 1, g: 0.001, mg: 0.000001, lb: 0.45359237, oz: 0.02834952, t: 1000 },
+        data: { b: 1, kb: 1e3, mb: 1e6, gb: 1e9, tb: 1e12, pb: 1e15, kib: 1024, mib: 1048576, gib: 1073741824, tib: 1099511627776 },
+        time: { s: 1, min: 60, hr: 3600, day: 86400, wk: 604800, yr: 31536000 },
+        volume: { l: 1, ml: 0.001, gal: 3.78541, qt: 0.946353, pt: 0.473176, cup: 0.24, floz: 0.0295735 },
+        area: { sqm: 1, sqkm: 1e6, sqmi: 2589988.11, ac: 4046.86, ha: 10000, sqft: 0.092903, sqin: 0.00064516 },
+        speed: { mps: 1, kmph: 0.277778, mph: 0.44704, kn: 0.514444 }
+    };
+
+    /* --- INITIALIZATION --- */
+    window.onload = function() {
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
+        
+        // Load Theme
+        let savedTheme = localStorage.getItem('appTheme');
+        if (savedTheme) {
+            currentThemeIndex = themes.indexOf(savedTheme);
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            let metaColor = savedTheme === 'light' ? '#f2f3f5' : (savedTheme === 'midnight' ? '#000000' : '#23272a');
+            document.getElementById('meta-theme-color').setAttribute('content', metaColor);
+        }
+
+        // Load Tabs & History
+        let savedTab = localStorage.getItem('activeTab'); if (savedTab) switchTab(savedTab);
+        let savedHist = localStorage.getItem('calcHistory'); if (savedHist) { calcHistory = JSON.parse(savedHist); renderHistory(); }
+        
+        renderFromDropdown(); 
+        
+        let savedConvVal = localStorage.getItem('convVal');
+        let savedConvFrom = localStorage.getItem('convFrom');
+        let savedConvTo = localStorage.getItem('convTo');
+        
+        if (savedConvVal) document.getElementById('conv-val').value = savedConvVal;
+        if (savedConvFrom) { document.getElementById('conv-from').value = savedConvFrom; updateToDropdown(); if (savedConvTo) document.getElementById('conv-to').value = savedConvTo; }
+
+        let savedRates = localStorage.getItem('savedRates'); if (savedRates) liveCurrencyRates = JSON.parse(savedRates);
+        if (navigator.onLine) fetchCurrencyRates();
+        if (savedConvVal) convertUnits();
+    }
+
+    /* --- TOAST & NETWORK LOGIC --- */
     function showToast(msg, type) {
         let t = document.getElementById("toast"); t.innerText = msg; t.className = "show " + type;
-        setTimeout(() => { t.className = ""; }, 4000);
+        setTimeout(() => { t.className = t.className.replace("show " + type, ""); }, 4000);
     }
-    window.addEventListener('offline', () => showToast("Offline mode", "offline"));
-    window.addEventListener('online', () => { showToast("Online! Updating rates", "online"); fetchRates(); });
+    window.addEventListener('offline', () => showToast("Running in offline mode", "offline"));
+    window.addEventListener('online', () => { showToast("Internet Connection Live. Updating Rates", "online"); fetchCurrencyRates(); });
 
-    async function fetchRates() {
+    async function fetchCurrencyRates() {
         try {
             let res = await fetch('https://open.er-api.com/v6/latest/USD');
             let data = await res.json();
             liveCurrencyRates = data.rates;
             localStorage.setItem('savedRates', JSON.stringify(liveCurrencyRates));
-        } catch (e) {}
+        } catch (err) {}
     }
 
-    window.onload = () => {
-        if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js'); }
-        let sTab = localStorage.getItem('activeTab'); if(sTab) switchTab(sTab);
-        let sHist = localStorage.getItem('calcHistory'); if(sHist) { calcHistory = JSON.parse(sHist); renderHistory(); }
-        let sRates = localStorage.getItem('savedRates'); if(sRates) liveCurrencyRates = JSON.parse(sRates);
-        renderFromDropdown();
-        fetchRates();
-    };
-
+    /* --- TAB LOGIC --- */
     function switchTab(t) {
         document.querySelectorAll('.tab-content, .tab-btn').forEach(el => el.classList.remove('active'));
-        document.getElementById('tab-'+t).classList.add('active');
-        document.getElementById('btn-'+t).classList.add('active');
+        document.getElementById('tab-' + t).classList.add('active');
+        document.getElementById('btn-' + t).classList.add('active');
         localStorage.setItem('activeTab', t);
     }
 
+    /* --- CALCULATOR LOGIC (WITH NaN FIX) --- */
     function append(c) { document.getElementById('display').value += c; }
     function clearDisplay() { document.getElementById('display').value = ''; document.getElementById('result').innerText = '0'; }
-    function deleteLast() { let d = document.getElementById('display'); d.value = d.value.slice(0,-1); }
-
+    function deleteLast() { let d = document.getElementById('display'); d.value = d.value.slice(0, -1); }
+    function getCleanExpression() { return document.getElementById('display').value.replace(/x/g, '*').replace(/÷/g, '/').replace(/\^/g, '**').replace(/π/g, 'Math.PI').replace(/sin\(/g, 'Math.sin(').replace(/cos\(/g, 'Math.cos(').replace(/tan\(/g, 'Math.tan(').replace(/√\(/g, 'Math.sqrt('); }
+    
     function calculateBODMAS() {
         try {
-            let val = document.getElementById('display').value;
-            let clean = val.replace(/x/g, '*').replace(/÷/g, '/').replace(/\^/g, '**').replace(/π/g, 'Math.PI').replace(/sin\(/g, 'Math.sin(').replace(/cos\(/g, 'Math.cos(').replace(/tan\(/g, 'Math.tan(').replace(/√\(/g, 'Math.sqrt(');
-            let res = Math.round(eval(clean) * 10000) / 10000;
+            let orig = document.getElementById('display').value; let expr = getCleanExpression(); if (!expr) return;
+            let res = eval(expr); 
+            if (isNaN(res) || !isFinite(res)) throw new Error("Invalid");
+            res = Math.round(res * 10000000) / 10000000;
             document.getElementById('result').innerText = "BODMAS: " + res;
-            calcHistory.push({expr: val, res: res, type: 'BODMAS'});
-            localStorage.setItem('calcHistory', JSON.stringify(calcHistory)); renderHistory();
-        } catch(e) { document.getElementById('result').innerText = "Error"; }
+            calcHistory.push({ expr: orig, res: res, type: 'BODMAS' }); localStorage.setItem('calcHistory', JSON.stringify(calcHistory)); renderHistory();
+        } catch (e) { document.getElementById('result').innerText = "Error"; }
     }
-
+    
     function calculateNoBODMAS() {
         try {
-            let val = document.getElementById('display').value;
-            let clean = val.replace(/x/g, '*').replace(/÷/g, '/');
-            let nums = clean.split(/([+\-*/])/).filter(x => !['+','-','*','/'].includes(x));
-            let ops = clean.split('').filter(x => ['+','-','*','/'].includes(x));
-            let total = parseFloat(nums[0]);
-            for(let i=0; i<ops.length; i++){
-                let n = parseFloat(nums[i+1]);
-                if(ops[i]=='+') total += n; else if(ops[i]=='-') total -= n;
-                else if(ops[i]=='*') total *= n; else if(ops[i]=='/') total /= n;
+            let orig = document.getElementById('display').value; if (!orig) return;
+            let clean = orig.replace(/x/g, '*').replace(/÷/g, '/');
+            
+            // Block complex math from seq engine
+            if (clean.includes('sin') || clean.includes('cos') || clean.includes('tan') || clean.includes('√') || clean.includes('π') || clean.includes('^')) {
+                document.getElementById('result').innerText = "Use BODMAS for scientific math."; return;
             }
-            total = Math.round(total * 10000) / 10000;
-            document.getElementById('result').innerText = "Seq: " + total;
-            calcHistory.push({expr: val, res: total, type: 'Seq'});
-            localStorage.setItem('calcHistory', JSON.stringify(calcHistory)); renderHistory();
-        } catch(e) { document.getElementById('result').innerText = "Error"; }
+
+            // FIX: Strip trailing symbols that cause NaN empty spaces
+            clean = clean.replace(/[+\-*/.]+$/, '');
+
+            // FIX: Safe Tokenizer handles infinite decimals & large numbers safely
+            let tokens = clean.match(/(\d+\.?\d*)|([+\-*/])/g);
+            if (!tokens || tokens.length === 0) return;
+
+            let total = parseFloat(tokens[0]);
+            
+            for (let i = 1; i < tokens.length; i += 2) { 
+                let op = tokens[i]; 
+                let nextNum = parseFloat(tokens[i + 1]); 
+                if (isNaN(nextNum)) break; // Prevents crash on "5++5"
+                if (op === '+') total += nextNum; else if (op === '-') total -= nextNum; else if (op === '*') total *= nextNum; else if (op === '/') total /= nextNum; 
+            }
+            
+            if (isNaN(total) || !isFinite(total)) throw new Error("Invalid");
+            total = Math.round(total * 100000000) / 100000000; 
+            document.getElementById('result').innerText = "Sequential: " + total;
+            
+            calcHistory.push({ expr: orig, res: total, type: 'Seq' }); localStorage.setItem('calcHistory', JSON.stringify(calcHistory)); renderHistory();
+        } catch (e) { document.getElementById('result').innerText = "Error"; }
     }
 
-    function renderHistory() {
-        let l = document.getElementById('history-list'); l.innerHTML = '';
-        calcHistory.slice().reverse().forEach(h => {
-            let d = document.createElement('div'); d.className = 'history-item ' + (h.type === 'Seq' ? 'seq' : '');
-            d.innerHTML = `<small>${h.expr}</small><br>${h.type}: ${h.res}`;
-            l.appendChild(d);
-        });
-    }
-
+    function renderHistory() { let l = document.getElementById('history-list'); l.innerHTML = ''; calcHistory.slice().reverse().forEach(h => { let d = document.createElement('div'); d.className = 'history-item ' + (h.type === 'Seq' ? 'seq' : ''); d.innerHTML = `<span style="color:var(--text-muted); font-size: 0.9rem;">${h.expr} =</span><br/>${h.type}: <strong>${h.res}</strong>`; l.appendChild(d); }); }
     function clearHistory() { calcHistory = []; localStorage.removeItem('calcHistory'); renderHistory(); }
+
+    /* --- SMART CONVERTER ENGINE --- */
+    function getCategoryOfUnit(u) { for (let c in unitCategories) { if (unitCategories[c].hasOwnProperty(u)) return c; } return null; }
 
     function renderFromDropdown() {
         let q = document.getElementById('search-units').value.toLowerCase();
-        let s = document.getElementById('conv-from'); s.innerHTML = '';
-        for(let cat in unitCategories){
-            let g = document.createElement('optgroup'); g.label = cat.toUpperCase();
+        let fromSelect = document.getElementById('conv-from');
+        let currentVal = fromSelect.value;
+        fromSelect.innerHTML = '';
+
+        for (let cat in unitCategories) {
+            let group = document.createElement('optgroup'); group.label = cat.toUpperCase();
             let added = false;
-            for(let k in unitCategories[cat]){
-                if(unitCategories[cat][k].toLowerCase().includes(q) || k.toLowerCase().includes(q)){
-                    g.appendChild(new Option(unitCategories[cat][k], k)); added = true;
-                }
-            }
-            if(added) s.appendChild(g);
-        }
-        updateToDropdown();
-    }
-
-    function updateToDropdown() {
-        let f = document.getElementById('conv-from').value;
-        let t = document.getElementById('conv-to');
-        let cat = Object.keys(unitCategories).find(c => unitCategories[c][f]);
-        t.innerHTML = '';
-        for(let k in unitCategories[cat]) t.appendChild(new Option(unitCategories[cat][k], k));
-    }
-
-    function convertUnits() {
-        let v = parseFloat(document.getElementById('conv-val').value);
-        let f = document.getElementById('conv-from').value;
-        let t = document.getElementById('conv-to').value;
-        if(isNaN(v)) return;
-        let res = 0;
-        let cat = Object.keys(unitCategories).find(c => unitCategories[c][f]);
-        if(cat === 'currency'){
-            res = (v / liveCurrencyRates[f]) * liveCurrencyRates[t];
-        } else {
-            res = (v * conversionRates[cat][f]) / conversionRates[cat][t];
-        }
-        document.getElementById('conv-result').innerText = Math.round(res*10000)/10000 + " " + t.toUpperCase();
-    }
-</script>
-</body>
-    </html>
-    
