@@ -27,9 +27,6 @@ A sleek, mobile-first web application that combines a dual-logic mathematical ca
 ---
 
 ## 📱 How to Install on Mobile
-
-If you choose to host this code on a secure web server (like GitHub Pages) in the future, it functions as a Progressive Web App that can be installed directly to a phone:
-
 1. Open the hosted link in **Chrome** (Android) or **Safari** (iOS).
 2. Tap the browser's menu (three dots in Chrome, or the Share button in Safari).
 3. Select **"Add to Home Screen"**.
