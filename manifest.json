@@ -1,14 +1,6 @@
 {
-  "id": "blurple-pro-calc",
+  "short_name": "Blurple Pro Calculator",
   "name": "Blurple Pro Calculator",
-  "short_name": "BlurpleCalc",
-  "description": "A sleek, dual-logic mathematical calculator and smart unit converter.",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
-  "background_color": "#23272a",
-  "theme_color": "#5865F2",
-  "orientation": "portrait",
   "icons": [
     {
       "src": "./icon.svg",
@@ -16,5 +8,10 @@
       "sizes": "512x512",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "start_url": "./index.html",
+  "background_color": "#23272a",
+  "display": "standalone",
+  "scope": "./",
+  "theme_color": "#5865F2"
 }
