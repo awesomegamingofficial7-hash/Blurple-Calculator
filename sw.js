@@ -1,7 +1,6 @@
-// The name of your cache. Update the 'v1' if you make major changes to your code later!
-const CACHE_NAME = 'blurple-cache-v1';
+// CHANGING THIS TO v2 FORCES THE PHONE TO DELETE THE BROKEN APP AND DOWNLOAD THE NEW ONE
+const CACHE_NAME = 'blurple-cache-v2';
 
-// The files we want to save offline
 const urlsToCache = [
   './',
   './index.html',
@@ -9,24 +8,28 @@ const urlsToCache = [
   './icon.svg'
 ];
 
-// Install Event - Caches your files when the user first visits
 self.addEventListener('install', event => {
+  self.skipWaiting(); // Forces the new version to activate immediately
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
   );
 });
 
-// Fetch Event - Serves the cached files when the user is offline
+self.addEventListener('activate', event => {
+  // This deletes the old 'v1' ghost cache
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cache => {
+          if (cache !== CACHE_NAME) return caches.delete(cache);
+        })
+      );
+    })
+  );
+});
+
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // If the file is in the cache, return it! Otherwise, fetch it from the internet.
-        return response || fetch(event.request);
-      })
+    fetch(event.request).catch(() => caches.match(event.request))
   );
 });
