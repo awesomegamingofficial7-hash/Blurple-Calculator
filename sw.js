@@ -1,5 +1,5 @@
 // CHANGING THIS TO v2 FORCES THE PHONE TO DELETE THE BROKEN APP AND DOWNLOAD THE NEW ONE
-const CACHE_NAME = 'blurple-cache-v2.167';
+const CACHE_NAME = 'blurple-cache-v2.1167';
 
 const urlsToCache = [
   './',
