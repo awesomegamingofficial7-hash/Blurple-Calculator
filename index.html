@@ -129,9 +129,7 @@
 </div>
 
 <div id="tab-conv" class="tab-content">
-    <div class="conv-group">
-        <input type="text" id="search-units" class="conv-input" placeholder="🔍 Search units..." onkeyup="renderFromDropdown()">
-    </div>
+    <div class="conv-group"><input type="text" id="search-units" class="conv-input" placeholder="🔍 Search units..." onkeyup="renderFromDropdown()"></div>
     <div class="conv-group"><label>Value:</label><input type="number" id="conv-val" class="conv-input" placeholder="0"></div>
     <div class="conv-group"><label>From:</label><select id="conv-from" onchange="updateToDropdown()"></select></div>
     <div class="conv-group"><label>To:</label><select id="conv-to"></select></div>
@@ -140,29 +138,12 @@
 </div>
 
 <div id="tab-theme" class="tab-content">
-    <div class="theme-group">
-        <input type="text" id="search-theme-input" class="conv-input" placeholder="🔍 Search Themes..." onkeyup="renderThemes()">
-    </div>
+    <div class="theme-group"><input type="text" id="search-theme-input" class="conv-input" placeholder="🔍 Search Themes..." onkeyup="renderThemes()"></div>
     <div class="theme-grid" id="theme-grid"></div>
 </div>
 
 <script>
-    function switchTab(tabId) {
-        const allContents = document.querySelectorAll('.tab-content');
-        const allButtons = document.querySelectorAll('.tab-btn');
-        for(let i = 0; i < allContents.length; i++) {
-            allContents[i].classList.remove('active');
-            allButtons[i].classList.remove('active');
-        }
-        const targetTab = document.getElementById('tab-' + tabId);
-        const targetBtn = document.getElementById('btn-' + tabId);
-        if (targetTab && targetBtn) {
-            targetTab.classList.add('active');
-            targetBtn.classList.add('active');
-            localStorage.setItem('activeTab', tabId);
-        }
-    }
-
+    // 1. DATA DICTIONARIES (Declared exactly ONCE!)
     let calcHistory = [];
     let liveCurrencyRates = {}; 
 
@@ -175,36 +156,37 @@
         { id: 'retro-storm', name: 'Retro Storm', color: '#00bcd4' }, { id: 'neon-nights', name: 'Neon Nights', color: '#ff00ff' }, { id: 'strawberry-lemonade', name: 'Strawberry', color: '#ff1493' }, { id: 'aurora', name: 'Aurora', color: '#00e676' }, { id: 'sepia', name: 'Sepia', color: '#a0522d' }
     ];
 
-    function applyTheme(themeId) {
-        document.documentElement.setAttribute('data-theme', themeId);
-        localStorage.setItem('appTheme', themeId);
-        let activeObj = allThemes.find(t => t.id === themeId);
-        if(activeObj) document.getElementById('meta-theme-color').setAttribute('content', activeObj.color);
-        renderThemes(); 
-    }
-
-    function renderThemes() {
-        const grid = document.getElementById('theme-grid');
-        const searchInput = document.getElementById('search-theme-input');
-        const q = searchInput ? searchInput.value.toLowerCase() : "";
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        grid.innerHTML = '';
-        
-        allThemes.forEach(t => {
-            if (t.name.toLowerCase().includes(q)) {
-                let div = document.createElement('div');
-                div.className = 'theme-btn-card ' + (currentTheme === t.id ? 'active-theme' : '');
-                div.innerHTML = `<span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:${t.color}; box-shadow: 0 0 2px rgba(0,0,0,0.5);"></span>${t.name}`;
-                div.onclick = () => applyTheme(t.id);
-                grid.appendChild(div);
-            }
-        });
-    }
-
-    /* RESTORED FULL MASSIVE UNIT LIST */
     const unitCategories = {
         currency: { USD: "US Dollar", EUR: "Euro", GBP: "British Pound", INR: "Indian Rupee", JPY: "Japanese Yen", AUD: "Australian Dollar", CAD: "Canadian Dollar", CNY: "Chinese Yuan", MXN: "Mexican Peso" },
         length: { m: "Meters", cm: "Centimeters", mm: "Millimeters", km: "Kilometers", in: "Inches", ft: "Feet", yd: "Yards", mi: "Miles", nm: "Nautical Miles" },
         weight: { kg: "Kilograms", g: "Grams", mg: "Milligrams", lb: "Pounds", oz: "Ounces", t: "Metric Tonnes" },
         temperature: { c: "Celsius (°C)", f: "Fahrenheit (°F)", k: "Kelvin (K)" },
-        data
+        data: { b: "Bytes", kb: "KB", mb: "MB", gb: "GB", tb: "TB", pb: "Petabytes", kib: "KiB", mib: "MiB", gib: "GiB", tib: "TiB" },
+        time: { s: "Seconds", min: "Minutes", hr: "Hours", day: "Days", wk: "Weeks", yr: "Years" },
+        volume: { l: "Liters", ml: "Milliliters", gal: "US Gallons", qt: "US Quarts", pt: "US Pints", cup: "US Cups", floz: "US Fluid Ounces" },
+        area: { sqm: "Sq Meters", sqkm: "Sq Kilometers", sqmi: "Sq Miles", ac: "Acres", ha: "Hectares", sqft: "Sq Feet", sqin: "Sq Inches" },
+        speed: { mps: "Meters/Sec", kmph: "Km/Hour", mph: "Miles/Hour", kn: "Knots" }
+    };
+
+    const conversionRates = {
+        length: { m: 1, cm: 0.01, mm: 0.001, km: 1000, in: 0.0254, ft: 0.3048, yd: 0.9144, mi: 1609.344, nm: 1852 },
+        weight: { kg: 1, g: 0.001, mg: 0.000001, lb: 0.45359237, oz: 0.02834952, t: 1000 },
+        data: { b: 1, kb: 1e3, mb: 1e6, gb: 1e9, tb: 1e12, pb: 1e15, kib: 1024, mib: 1048576, gib: 1073741824, tib: 1099511627776 },
+        time: { s: 1, min: 60, hr: 3600, day: 86400, wk: 604800, yr: 31536000 },
+        volume: { l: 1, ml: 0.001, gal: 3.78541, qt: 0.946353, pt: 0.473176, cup: 0.24, floz: 0.0295735 },
+        area: { sqm: 1, sqkm: 1e6, sqmi: 2589988.11, ac: 4046.86, ha: 10000, sqft: 0.092903, sqin: 0.00064516 },
+        speed: { mps: 1, kmph: 0.277778, mph: 0.44704, kn: 0.514444 }
+    };
+
+    // 2. CORE FUNCTIONS
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        const targetTab = document.getElementById('tab-' + tabId);
+        const targetBtn = document.getElementById('btn-' + tabId);
+        if (targetTab && targetBtn) {
+            targetTab.classList.add('active');
+            targetBtn.classList.add('active');
+            localStorage.setItem('activeTab', tabId);
+        } else {
+            document.getElementB
