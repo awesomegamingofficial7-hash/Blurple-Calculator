@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
+    <script>
+        window.addEventListener('error', function(e) {
+            document.body.innerHTML = '<div style="color:#ff5252; padding:30px; font-family:sans-serif; font-size:18px; background:#111; height:100vh; z-index:9999; position:absolute; top:0; left:0; width:100%;"><b>🚨 FATAL APP CRASH 🚨</b><br><br><b>Error:</b> ' + e.message + '<br><br><b>Line:</b> ' + e.lineno + '</div>';
+        });
+    </script>
+    
+    <meta charset="UTF-8">
+    ```
+
+### What This Does:
+If there is *any* typo, missing bracket, or memory glitch that causes the Javascript to freeze your buttons, this script will instantly catch it. The screen will turn black and flash a giant red error telling you exactly what the bug is and **what line number it is on**.
+
+1. Add that script to the top of your `index.html`.
+2. Wait 2 minutes for GitHub to save it.
+3. Open `https://awesomeappcollection.github.io/Blurple-Calculator/index.html`.
+
+If the screen turns red, **copy and paste exactly what the red text says right here to me.** I will know immediately what line is jammed and how to unjam it!
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="manifest" href="manifest.json">
