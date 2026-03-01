@@ -1,26 +1,89 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <script>
         window.addEventListener('error', function(e) {
             document.body.innerHTML = '<div style="color:#ff5252; padding:30px; font-family:sans-serif; font-size:18px; background:#111; height:100vh; z-index:9999; position:absolute; top:0; left:0; width:100%;"><b>🚨 FATAL APP CRASH 🚨</b><br><br><b>Error:</b> ' + e.message + '<br><br><b>Line:</b> ' + e.lineno + '</div>';
         });
     </script>
-    
-    <meta charset="UTF-8">
-    ```
 
-### What This Does:
-If there is *any* typo, missing bracket, or memory glitch that causes the Javascript to freeze your buttons, this script will instantly catch it. The screen will turn black and flash a giant red error telling you exactly what the bug is and **what line number it is on**.
+    <script>
+        let calcHistory = [];
+        let liveCurrencyRates = {}; 
+        
+        const allThemes = [
+            { id: 'dark', name: 'Discord Dark', color: '#5865F2' }, { id: 'midnight', name: 'Discord Midnight', color: '#000000' }, { id: 'light', name: 'Discord Light', color: '#ffffff' }, { id: 'blurple', name: 'Classic Blurple', color: '#23272a' },
+            { id: 'mint-apple', name: 'Mint Apple', color: '#4caf50' }, { id: 'citrus-sherbert', name: 'Citrus Sherbert', color: '#ff9800' }, { id: 'retro-raincloud', name: 'Retro Raincloud', color: '#607d8b' }, { id: 'hanami', name: 'Hanami', color: '#e91e63' },
+            { id: 'sunrise', name: 'Sunrise', color: '#ff5722' }, { id: 'cotton-candy', name: 'Cotton Candy', color: '#9c27b0' }, { id: 'lofi-vibes', name: 'Lofi Vibes', color: '#9d81d4' }, { id: 'desert-khaki', name: 'Desert Khaki', color: '#795548' },
+            { id: 'sunset', name: 'Sunset', color: '#ff7043' }, { id: 'chroma-glow', name: 'Chroma Glow', color: '#00e5ff' }, { id: 'forest', name: 'Forest', color: '#66bb6a' }, { id: 'crimson', name: 'Crimson', color: '#ff5252' },
+            { id: 'midnight-blurple', name: 'Midnight Blurple', color: '#58a6ff' }, { id: 'mars', name: 'Mars', color: '#bf360c' }, { id: 'dusk', name: 'Dusk', color: '#651fff' }, { id: 'under-the-sea', name: 'Under The Sea', color: '#1de9b6' },
+            { id: 'retro-storm', name: 'Retro Storm', color: '#00bcd4' }, { id: 'neon-nights', name: 'Neon Nights', color: '#ff00ff' }, { id: 'strawberry-lemonade', name: 'Strawberry', color: '#ff1493' }, { id: 'aurora', name: 'Aurora', color: '#00e676' }, { id: 'sepia', name: 'Sepia', color: '#a0522d' }
+        ];
 
-1. Add that script to the top of your `index.html`.
-2. Wait 2 minutes for GitHub to save it.
-3. Open `https://awesomeappcollection.github.io/Blurple-Calculator/index.html`.
+        const unitCategories = {
+            currency: { USD: "US Dollar", EUR: "Euro", GBP: "Pound", INR: "Rupee", JPY: "Yen", AUD: "AUD", CAD: "CAD" },
+            length: { m: "Meters", cm: "Centimeters", mm: "Millimeters", km: "Kilometers", in: "Inches", ft: "Feet", yd: "Yards", mi: "Miles", nm: "Nautical Miles" },
+            weight: { kg: "Kilograms", g: "Grams", mg: "Milligrams", lb: "Pounds", oz: "Ounces", t: "Metric Tonnes" },
+            temperature: { c: "Celsius (°C)", f: "Fahrenheit (°F)", k: "Kelvin (K)" },
+            data: { b: "Bytes", kb: "KB", mb: "MB", gb: "GB", tb: "TB", pb: "Petabytes", kib: "KiB", mib: "MiB", gib: "GiB", tib: "TiB" },
+            time: { s: "Seconds", min: "Minutes", hr: "Hours", day: "Days", wk: "Weeks", yr: "Years" },
+            volume: { l: "Liters", ml: "Milliliters", gal: "US Gallons", qt: "US Quarts", pt: "US Pints", cup: "US Cups", floz: "US Fluid Ounces" },
+            area: { sqm: "Sq Meters", sqkm: "Sq Kilometers", sqmi: "Sq Miles", ac: "Acres", ha: "Hectares", sqft: "Sq Feet", sqin: "Sq Inches" },
+            speed: { mps: "Meters/Sec", kmph: "Km/Hour", mph: "Miles/Hour", kn: "Knots" }
+        };
 
-If the screen turns red, **copy and paste exactly what the red text says right here to me.** I will know immediately what line is jammed and how to unjam it!
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        const conversionRates = {
+            length: { m: 1, cm: 0.01, mm: 0.001, km: 1000, in: 0.0254, ft: 0.3048, yd: 0.9144, mi: 1609.344, nm: 1852 },
+            weight: { kg: 1, g: 0.001, mg: 0.000001, lb: 0.45359237, oz: 0.02834952, t: 1000 },
+            data: { b: 1, kb: 1e3, mb: 1e6, gb: 1e9, tb: 1e12, pb: 1e15, kib: 1024, mib: 1048576, gib: 1073741824, tib: 1099511627776 },
+            time: { s: 1, min: 60, hr: 3600, day: 86400, wk: 604800, yr: 31536000 },
+            volume: { l: 1, ml: 0.001, gal: 3.78541, qt: 0.946353, pt: 0.473176, cup: 0.24, floz: 0.0295735 },
+            area: { sqm: 1, sqkm: 1e6, sqmi: 2589988.11, ac: 4046.86, ha: 10000, sqft: 0.092903, sqin: 0.00064516 },
+            speed: { mps: 1, kmph: 0.277778, mph: 0.44704, kn: 0.514444 }
+        };
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            const targetTab = document.getElementById('tab-' + tabId);
+            const targetBtn = document.getElementById('btn-' + tabId);
+            if (targetTab && targetBtn) {
+                targetTab.classList.add('active');
+                targetBtn.classList.add('active');
+                localStorage.setItem('activeTab', tabId);
+            }
+        }
+
+        function applyTheme(themeId) {
+            document.documentElement.setAttribute('data-theme', themeId);
+            localStorage.setItem('appTheme', themeId);
+            let activeObj = allThemes.find(t => t.id === themeId);
+            if(activeObj) document.getElementById('meta-theme-color').setAttribute('content', activeObj.color);
+            if(document.getElementById('theme-grid')) renderThemes(); 
+        }
+
+        function renderThemes() {
+            const grid = document.getElementById('theme-grid');
+            if(!grid) return;
+            const searchInput = document.getElementById('search-theme-input');
+            const q = searchInput ? searchInput.value.toLowerCase() : "";
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            grid.innerHTML = '';
+            allThemes.forEach(t => {
+                if (t.name.toLowerCase().includes(q)) {
+                    let div = document.createElement('div');
+                    div.className = 'theme-btn-card ' + (currentTheme === t.id ? 'active-theme' : '');
+                    div.innerHTML = `<span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:${t.color}; box-shadow: 0 0 2px rgba(0,0,0,0.5);"></span>${t.name}`;
+                    div.onclick = () => applyTheme(t.id);
+                    grid.appendChild(div);
+                }
+            });
+        }
+    </script>
+
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjEyOCIgZmlsbD0iIzU4NjVGMiIvPjxyZWN0IHg9IjEwNiIgeT0iOTYiIHdpZHRoPSIzMDAiIGhlaWdodD0iMzIwIiByeD0iMzIiIGZpbGw9IiMyMzI3MmEiLz48cmVjdCB4PSIxMzYiIHk9IjEzNiIgd2lkdGg9IjI0MCIgaGVpZ2h0PSI3MCIgcng9IjEyIiBmaWxsPSIjMWUxZjIyIi8+PHJlY3QgeD0iMjk2IiB5PSIxNjUiIHdpZHRoPSI2MCIgaGVpZ2h0PSIxMiIgcng9IjYiIGZpbGw9IiM1ODY1RjIiLz48Y2lyY2xlIGN4PSIxNjYiIGN5PSIyNTYiIHI9IjI0IiBmaWxsPSIjNGY1NDVjIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMjU2IiByPSIyNCIgZmlsbD0iIzRmNTQ1YyIvPjxjaXJjbGUgY3g9IjM0NiIgY3k9IjI1NiIgcj0iMjQiIGZpbGw9IiNlZDQyNDUiLz48Y2lyY2xlIGN4PSIxNjYiIGN5PSIzMzYiIHI9IjI0IiBmaWxsPSIjNGY1NDVjIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMzM2IiByPSIyNCIgZmlsbD0iIzRmNTQ1YyIvPjxjaXJjbGUgY3g9IjM0NiIgY3k9IjMzNiIgcj0iMjQiIGZpbGw9IiM0Q0FGNTQiLz48L3N2Zz4=">
     <meta name="mobile-web-app-capable" content="yes">
@@ -28,7 +91,6 @@ If the screen turns red, **copy and paste exactly what the red text says right h
     <title>Blurple Pro App</title>
     
     <style>
-        /* --- 25 THEMES --- */
         :root[data-theme="dark"] { --bg-main: #313338; --bg-sec: #2b2d31; --bg-card: #1e1f22; --text-main: #f2f3f5; --text-muted: #b5bac1; --accent: #5865F2; --sci-btn: #4e5058; --border-card: none; }
         :root[data-theme="midnight"] { --bg-main: #000000; --bg-sec: #111214; --bg-card: #000000; --text-main: #f2f3f5; --text-muted: #80848e; --accent: #5865F2; --sci-btn: #2b2d31; --border-card: 1px solid #1e1f22; }
         :root[data-theme="light"] { --bg-main: #ffffff; --bg-sec: #f2f3f5; --bg-card: #e3e5e8; --text-main: #060607; --text-muted: #4e5058; --accent: #5865F2; --sci-btn: #d4d7dc; --border-card: none; }
@@ -131,80 +193,4 @@ If the screen turns red, **copy and paste exactly what the red text says right h
         <button class="key action" onclick="clearDisplay()">C</button> <button class="key sci" onclick="append('^')">^</button> <button class="key sci" onclick="append('π')">π</button> <button class="key op" onclick="append('÷')">÷</button>
         <button class="key" onclick="append('7')">7</button> <button class="key" onclick="append('8')">8</button> <button class="key" onclick="append('9')">9</button> <button class="key op" onclick="append('x')">x</button>
         <button class="key" onclick="append('4')">4</button> <button class="key" onclick="append('5')">5</button> <button class="key" onclick="append('6')">6</button> <button class="key op" onclick="append('-')">-</button>
-        <button class="key" onclick="append('1')">1</button> <button class="key" onclick="append('2')">2</button> <button class="key" onclick="append('3')">3</button> <button class="key op" onclick="append('+')">+</button>
-        <button class="key" onclick="append('0')">0</button> <button class="key" onclick="append('.')">.</button> <button class="key" onclick="append(')')">)</button> <button class="key action" onclick="deleteLast()">DEL</button>
-    </div>
-    
-    <div class="calc-row">
-        <button class="btn-calc btn-bodmas" onclick="calculateBODMAS()">= BODMAS</button>
-        <button class="btn-calc btn-no-bodmas" onclick="calculateNoBODMAS()">= Seq</button>
-    </div>
-    
-    <div class="history-container">
-        <div class="history-header"><span>History</span><button class="btn-clear-history" onclick="clearHistory()">Clear</button></div>
-        <div id="history-list"></div>
-    </div>
-</div>
-
-<div id="tab-conv" class="tab-content">
-    <div class="conv-group"><input type="text" id="search-units" class="conv-input" placeholder="🔍 Search units..." onkeyup="renderFromDropdown()"></div>
-    <div class="conv-group"><label>Value:</label><input type="number" id="conv-val" class="conv-input" placeholder="0"></div>
-    <div class="conv-group"><label>From:</label><select id="conv-from" onchange="updateToDropdown()"></select></div>
-    <div class="conv-group"><label>To:</label><select id="conv-to"></select></div>
-    <button class="btn-convert" onclick="convertUnits()">Convert</button>
-    <div class="result-box" style="text-align:center;" id="conv-result">Result</div>
-</div>
-
-<div id="tab-theme" class="tab-content">
-    <div class="theme-group"><input type="text" id="search-theme-input" class="conv-input" placeholder="🔍 Search Themes..." onkeyup="renderThemes()"></div>
-    <div class="theme-grid" id="theme-grid"></div>
-</div>
-
-<script>
-    // 1. DATA DICTIONARIES (Declared exactly ONCE!)
-    let calcHistory = [];
-    let liveCurrencyRates = {}; 
-
-    const allThemes = [
-        { id: 'dark', name: 'Discord Dark', color: '#5865F2' }, { id: 'midnight', name: 'Discord Midnight', color: '#000000' }, { id: 'light', name: 'Discord Light', color: '#ffffff' }, { id: 'blurple', name: 'Classic Blurple', color: '#23272a' },
-        { id: 'mint-apple', name: 'Mint Apple', color: '#4caf50' }, { id: 'citrus-sherbert', name: 'Citrus Sherbert', color: '#ff9800' }, { id: 'retro-raincloud', name: 'Retro Raincloud', color: '#607d8b' }, { id: 'hanami', name: 'Hanami', color: '#e91e63' },
-        { id: 'sunrise', name: 'Sunrise', color: '#ff5722' }, { id: 'cotton-candy', name: 'Cotton Candy', color: '#9c27b0' }, { id: 'lofi-vibes', name: 'Lofi Vibes', color: '#9d81d4' }, { id: 'desert-khaki', name: 'Desert Khaki', color: '#795548' },
-        { id: 'sunset', name: 'Sunset', color: '#ff7043' }, { id: 'chroma-glow', name: 'Chroma Glow', color: '#00e5ff' }, { id: 'forest', name: 'Forest', color: '#66bb6a' }, { id: 'crimson', name: 'Crimson', color: '#ff5252' },
-        { id: 'midnight-blurple', name: 'Midnight Blurple', color: '#58a6ff' }, { id: 'mars', name: 'Mars', color: '#bf360c' }, { id: 'dusk', name: 'Dusk', color: '#651fff' }, { id: 'under-the-sea', name: 'Under The Sea', color: '#1de9b6' },
-        { id: 'retro-storm', name: 'Retro Storm', color: '#00bcd4' }, { id: 'neon-nights', name: 'Neon Nights', color: '#ff00ff' }, { id: 'strawberry-lemonade', name: 'Strawberry', color: '#ff1493' }, { id: 'aurora', name: 'Aurora', color: '#00e676' }, { id: 'sepia', name: 'Sepia', color: '#a0522d' }
-    ];
-
-    const unitCategories = {
-        currency: { USD: "US Dollar", EUR: "Euro", GBP: "British Pound", INR: "Indian Rupee", JPY: "Japanese Yen", AUD: "Australian Dollar", CAD: "Canadian Dollar", CNY: "Chinese Yuan", MXN: "Mexican Peso" },
-        length: { m: "Meters", cm: "Centimeters", mm: "Millimeters", km: "Kilometers", in: "Inches", ft: "Feet", yd: "Yards", mi: "Miles", nm: "Nautical Miles" },
-        weight: { kg: "Kilograms", g: "Grams", mg: "Milligrams", lb: "Pounds", oz: "Ounces", t: "Metric Tonnes" },
-        temperature: { c: "Celsius (°C)", f: "Fahrenheit (°F)", k: "Kelvin (K)" },
-        data: { b: "Bytes", kb: "KB", mb: "MB", gb: "GB", tb: "TB", pb: "Petabytes", kib: "KiB", mib: "MiB", gib: "GiB", tib: "TiB" },
-        time: { s: "Seconds", min: "Minutes", hr: "Hours", day: "Days", wk: "Weeks", yr: "Years" },
-        volume: { l: "Liters", ml: "Milliliters", gal: "US Gallons", qt: "US Quarts", pt: "US Pints", cup: "US Cups", floz: "US Fluid Ounces" },
-        area: { sqm: "Sq Meters", sqkm: "Sq Kilometers", sqmi: "Sq Miles", ac: "Acres", ha: "Hectares", sqft: "Sq Feet", sqin: "Sq Inches" },
-        speed: { mps: "Meters/Sec", kmph: "Km/Hour", mph: "Miles/Hour", kn: "Knots" }
-    };
-
-    const conversionRates = {
-        length: { m: 1, cm: 0.01, mm: 0.001, km: 1000, in: 0.0254, ft: 0.3048, yd: 0.9144, mi: 1609.344, nm: 1852 },
-        weight: { kg: 1, g: 0.001, mg: 0.000001, lb: 0.45359237, oz: 0.02834952, t: 1000 },
-        data: { b: 1, kb: 1e3, mb: 1e6, gb: 1e9, tb: 1e12, pb: 1e15, kib: 1024, mib: 1048576, gib: 1073741824, tib: 1099511627776 },
-        time: { s: 1, min: 60, hr: 3600, day: 86400, wk: 604800, yr: 31536000 },
-        volume: { l: 1, ml: 0.001, gal: 3.78541, qt: 0.946353, pt: 0.473176, cup: 0.24, floz: 0.0295735 },
-        area: { sqm: 1, sqkm: 1e6, sqmi: 2589988.11, ac: 4046.86, ha: 10000, sqft: 0.092903, sqin: 0.00064516 },
-        speed: { mps: 1, kmph: 0.277778, mph: 0.44704, kn: 0.514444 }
-    };
-
-    // 2. CORE FUNCTIONS
-    function switchTab(tabId) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-        const targetTab = document.getElementById('tab-' + tabId);
-        const targetBtn = document.getElementById('btn-' + tabId);
-        if (targetTab && targetBtn) {
-            targetTab.classList.add('active');
-            targetBtn.classList.add('active');
-            localStorage.setItem('activeTab', tabId);
-        } else {
-            document.getElementB
+        <button class="key" onclick="append('1')">1</button
