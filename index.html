@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <script>
-        // --- 1. GLOBALS ---
+        // --- 1. DATA & THEMES ---
         let calcHistory = [];
         let liveCurrencyRates = {}; 
         
@@ -40,7 +40,7 @@
             speed: { mps: 1, kmph: 0.277778, mph: 0.44704, kn: 0.514444 }
         };
 
-        // --- 2. CORE FUNCTIONS ---
+        // --- 2. THEME & TAB LOGIC ---
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -64,126 +64,90 @@
         function renderThemes() {
             const grid = document.getElementById('theme-grid');
             if(!grid) return;
-            const q = (document.getElementById('search-theme-input')?.value || "").toLowerCase();
+            const searchInput = document.getElementById('search-theme-input');
+            const q = searchInput ? searchInput.value.toLowerCase() : "";
             const currentTheme = document.documentElement.getAttribute('data-theme');
             grid.innerHTML = '';
             allThemes.forEach(t => {
                 if (t.name.toLowerCase().includes(q)) {
                     let div = document.createElement('div');
                     div.className = 'theme-btn-card ' + (currentTheme === t.id ? 'active-theme' : '');
-                    div.innerHTML = `<span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:${t.color}; box-shadow: 0 0 2px rgba(0,0,0,0.5);"></span>${t.name}`;
+                    div.innerHTML = `<span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:${t.color}; border: 1px solid rgba(0,0,0,0.1);"></span>${t.name}`;
                     div.onclick = () => applyTheme(t.id);
                     grid.appendChild(div);
                 }
             });
         }
 
-        // --- 3. CALCULATOR FUNCTIONS ---
+        // --- 3. CALC & CONV ENGINE ---
         function append(c) { document.getElementById('display').value += c; }
         function clearDisplay() { document.getElementById('display').value = ''; document.getElementById('result').innerText = '0'; }
         function deleteLast() { let d = document.getElementById('display'); d.value = d.value.slice(0, -1); }
-        function getCleanExpression() { return document.getElementById('display').value.replace(/x/g, '*').replace(/÷/g, '/').replace(/\^/g, '**').replace(/π/g, 'Math.PI').replace(/sin\(/g, 'Math.sin(').replace(/cos\(/g, 'Math.cos(').replace(/tan\(/g, 'Math.tan(').replace(/√\(/g, 'Math.sqrt('); }
         
         function calculateBODMAS() {
             try {
-                let orig = document.getElementById('display').value; let expr = getCleanExpression(); if (!expr) return;
-                let res = eval(expr); 
-                if (isNaN(res) || !isFinite(res)) throw new Error("Invalid");
-                res = Math.round(res * 100000) / 100000;
+                let val = document.getElementById('display').value.replace(/x/g, '*').replace(/÷/g, '/').replace(/\^/g, '**').replace(/π/g, 'Math.PI').replace(/sin\(/g, 'Math.sin(').replace(/cos\(/g, 'Math.cos(').replace(/tan\(/g, 'Math.tan(').replace(/√\(/g, 'Math.sqrt(');
+                let res = Math.round(eval(val) * 100000) / 100000;
                 document.getElementById('result').innerText = "BODMAS: " + res;
-                calcHistory.push({ expr: orig, res: res, type: 'BODMAS' }); renderHistory();
-            } catch (e) { document.getElementById('result').innerText = "Error"; }
+                calcHistory.push({expr: document.getElementById('display').value, res: res, type: 'BODMAS'}); renderHistory();
+            } catch(e) { document.getElementById('result').innerText = "Error"; }
         }
-        
+
         function calculateNoBODMAS() {
             try {
-                let orig = document.getElementById('display').value; if (!orig) return;
-                let clean = orig.replace(/x/g, '*').replace(/÷/g, '/');
-                if (clean.includes('sin') || clean.includes('cos') || clean.includes('tan') || clean.includes('√') || clean.includes('π') || clean.includes('^')) {
-                    document.getElementById('result').innerText = "Use BODMAS for scientific math."; return;
-                }
-                clean = clean.replace(/[+\-*/.]+$/, '');
+                let clean = document.getElementById('display').value.replace(/x/g, '*').replace(/÷/g, '/').replace(/[+\-*/.]+$/, '');
                 let tokens = clean.match(/(\d+\.?\d*)|([+\-*/])/g);
-                if (!tokens) return;
                 let total = parseFloat(tokens[0]);
                 for (let i = 1; i < tokens.length; i += 2) { 
-                    let op = tokens[i]; let nextNum = parseFloat(tokens[i + 1]); 
-                    if (isNaN(nextNum)) break;
-                    if (op === '+') total += nextNum; else if (op === '-') total -= nextNum; else if (op === '*') total *= nextNum; else if (op === '/') total /= nextNum; 
+                    let op = tokens[i]; let n = parseFloat(tokens[i + 1]); 
+                    if (op === '+') total += n; else if (op === '-') total -= n; else if (op === '*') total *= n; else if (op === '/') total /= n; 
                 }
-                total = Math.round(total * 100000) / 100000; 
+                total = Math.round(total * 100000) / 100000;
                 document.getElementById('result').innerText = "Seq: " + total;
-                calcHistory.push({ expr: orig, res: total, type: 'Seq' }); renderHistory();
-            } catch (e) { document.getElementById('result').innerText = "Error"; }
+                calcHistory.push({expr: document.getElementById('display').value, res: total, type: 'Seq'}); renderHistory();
+            } catch(e) { document.getElementById('result').innerText = "Error"; }
         }
 
         function renderHistory() { 
             let l = document.getElementById('history-list'); if(!l) return;
             l.innerHTML = ''; calcHistory.slice().reverse().forEach(h => {
                 let d = document.createElement('div'); d.className = 'history-item';
-                d.innerHTML = `<span style="color:var(--text-muted); font-size: 0.9rem;">${h.expr} =</span><br/>${h.type}: <strong>${h.res}</strong>`;
+                d.innerHTML = `<span style="opacity:0.7; font-size: 0.9rem;">${h.expr} =</span><br/>${h.type}: <strong>${h.res}</strong>`;
                 l.appendChild(d);
             });
             localStorage.setItem('calcHistory', JSON.stringify(calcHistory));
         }
-        function clearHistory() { calcHistory = []; localStorage.removeItem('calcHistory'); renderHistory(); }
-
-        // --- 4. CONVERTER FUNCTIONS ---
-        function getCategoryOfUnit(u) { for (let c in unitCategories) { if (unitCategories[c].hasOwnProperty(u)) return c; } return null; }
 
         function renderFromDropdown() {
             const q = (document.getElementById('search-units')?.value || "").toLowerCase();
-            let fromSelect = document.getElementById('conv-from'); if(!fromSelect) return;
-            let currentVal = fromSelect.value;
-            fromSelect.innerHTML = '';
+            let s = document.getElementById('conv-from'); if(!s) return;
+            s.innerHTML = '';
             for (let cat in unitCategories) {
-                let group = document.createElement('optgroup'); group.label = cat.toUpperCase(); let added = false;
-                for (let key in unitCategories[cat]) {
-                    if (unitCategories[cat][key].toLowerCase().includes(q) || key.toLowerCase().includes(q)) { group.appendChild(new Option(unitCategories[cat][key], key)); added = true; }
+                let g = document.createElement('optgroup'); g.label = cat.toUpperCase();
+                for (let k in unitCategories[cat]) {
+                    if (unitCategories[cat][k].toLowerCase().includes(q) || k.toLowerCase().includes(q)) g.appendChild(new Option(unitCategories[cat][k], k));
                 }
-                if (added) fromSelect.appendChild(group);
+                if (g.children.length > 0) s.appendChild(g);
             }
-            if (fromSelect.querySelector(`option[value="${currentVal}"]`)) fromSelect.value = currentVal;
-            updateToDropdown(); 
+            updateToDropdown();
         }
 
         function updateToDropdown() {
-            let fromSelect = document.getElementById('conv-from'); let toSelect = document.getElementById('conv-to');
-            if (!fromSelect || !toSelect || !fromSelect.value) return;
-            let cat = getCategoryOfUnit(fromSelect.value); let prevTo = toSelect.value;
-            toSelect.innerHTML = '';
-            if(cat) {
-                for (let key in unitCategories[cat]) { toSelect.appendChild(new Option(unitCategories[cat][key], key)); }
-                if (unitCategories[cat].hasOwnProperty(prevTo)) toSelect.value = prevTo;
-            }
+            let f = document.getElementById('conv-from').value; let t = document.getElementById('conv-to');
+            let cat = Object.keys(unitCategories).find(c => unitCategories[c][f]);
+            if(!t || !cat) return;
+            t.innerHTML = '';
+            for (let k in unitCategories[cat]) t.appendChild(new Option(unitCategories[cat][k], k));
             convertUnits();
         }
 
         function convertUnits() {
-            let valInput = document.getElementById('conv-val');
-            let fromSelect = document.getElementById('conv-from');
-            let toSelect = document.getElementById('conv-to');
+            let v = parseFloat(document.getElementById('conv-val').value);
+            let f = document.getElementById('conv-from').value; let t = document.getElementById('conv-to').value;
             let resBox = document.getElementById('conv-result');
-            if(!valInput || !fromSelect || !toSelect || !resBox) return;
-
-            let v = parseFloat(valInput.value);
-            let f = fromSelect.value; let t = toSelect.value;
             if (isNaN(v) || !f || !t) { resBox.innerText = "Waiting..."; return; }
-            
-            localStorage.setItem('convVal', v); localStorage.setItem('convFrom', f); localStorage.setItem('convTo', t);
-            let res = null; let cat = getCategoryOfUnit(f);
-            if (f === t) { res = v; }
-            else if (cat === 'currency') {
-                if (!liveCurrencyRates || !liveCurrencyRates[f]) { resBox.innerText = "Offline"; return; }
-                res = (v / liveCurrencyRates[f]) * liveCurrencyRates[t];
-            } 
-            else if (cat === 'temperature') {
-                let tempC = (f === 'c') ? v : (f === 'f') ? (v - 32) * 5/9 : v - 273.15;
-                res = (t === 'c') ? tempC : (t === 'f') ? (tempC * 9/5) + 32 : tempC + 273.15;
-            } 
-            else {
-                res = (v * conversionRates[cat][f]) / conversionRates[cat][t];
-            }
+            let cat = Object.keys(unitCategories).find(c => unitCategories[c][f]);
+            let res = (cat === 'currency') ? (v / liveCurrencyRates[f]) * liveCurrencyRates[t] : (cat === 'temperature') ? (f === 'c' ? v : (f === 'f' ? (v-32)*5/9 : v-273.15)) : (v * conversionRates[cat][f]) / conversionRates[cat][t];
             resBox.innerText = Math.round(res * 10000) / 10000 + " " + t.toUpperCase();
         }
 
@@ -191,54 +155,60 @@
             try {
                 let res = await fetch('https://open.er-api.com/v6/latest/USD');
                 let data = await res.json(); liveCurrencyRates = data.rates;
-                localStorage.setItem('savedRates', JSON.stringify(liveCurrencyRates));
             } catch (err) {}
         }
 
-        // --- 5. BOOT ENGINE ---
-        window.addEventListener('load', function() {
-            try {
-                if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
-                applyTheme(localStorage.getItem('appTheme') || 'dark');
-                switchTab(localStorage.getItem('activeTab') || 'calc');
-                let savedHist = localStorage.getItem('calcHistory'); if (savedHist) { calcHistory = JSON.parse(savedHist); renderHistory(); }
-                renderFromDropdown(); renderThemes();
-                if (navigator.onLine) fetchCurrencyRates();
-            } catch(e) { console.error("Boot Error", e); }
+        window.addEventListener('load', () => {
+            applyTheme(localStorage.getItem('appTheme') || 'dark');
+            switchTab(localStorage.getItem('activeTab') || 'calc');
+            let h = localStorage.getItem('calcHistory'); if (h) { calcHistory = JSON.parse(h); renderHistory(); }
+            renderFromDropdown(); renderThemes(); fetchCurrencyRates();
         });
     </script>
-
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" id="meta-theme-color" content="#313338">
-    <title>Blurple Pro App</title>
     
     <style>
+        /* --- NATIVE DISCORD-LIKE THEME SYSTEM --- */
+        :root[data-theme="dark"] { --bg-main: #313338; --bg-sec: #2b2d31; --bg-card: #1e1f22; --text-main: #f2f3f5; --text-muted: #b5bac1; --accent: #5865F2; --sci-btn: #4e5058; }
+        :root[data-theme="midnight"] { --bg-main: #000000; --bg-sec: #111214; --bg-card: #000000; --text-main: #f2f3f5; --text-muted: #80848e; --accent: #5865F2; --sci-btn: #2b2d31; }
+        :root[data-theme="light"] { --bg-main: #ffffff; --bg-sec: #f2f3f5; --bg-card: #e3e5e8; --text-main: #060607; --text-muted: #4e5058; --accent: #5865F2; --sci-btn: #d4d7dc; }
+        :root[data-theme="mint-apple"] { --bg-main: #e8f5e9; --bg-sec: #c8e6c9; --bg-card: #a5d6a7; --text-main: #1b5e20; --text-muted: #2e7d32; --accent: #4caf50; --sci-btn: #81c784; }
+        :root[data-theme="hanami"] { --bg-main: #fce4ec; --bg-sec: #f8bbd0; --bg-card: #f48fb1; --text-main: #880e4f; --text-muted: #c2185b; --accent: #e91e63; --sci-btn: #f06292; }
+        /* (Adding just enough here for demo, the JS handles all 25) */
+
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg-main); margin: 0; height: 100dvh; display: flex; flex-direction: column; color: var(--text-main); overflow: hidden; }
-        .tab-bar { display: flex; background: var(--bg-sec); padding: 5px; flex-shrink: 0; }
+        
+        .tab-bar { display: flex; background: var(--bg-sec); padding: 5px; flex-shrink: 0; border-bottom: 1px solid rgba(0,0,0,0.1); }
         .tab-btn { flex: 1; padding: 15px 5px; background: transparent; border: none; color: var(--text-muted); font-size: 1rem; font-weight: bold; cursor: pointer; border-bottom: 3px solid transparent; display:flex; justify-content:center; align-items:center; gap: 5px;}
-        .tab-btn.active { color: var(--text-main); border-bottom: 3px solid var(--accent); }
+        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
         .tab-btn svg { width: 16px; height: 16px; fill: currentColor; }
+        
         .tab-content { display: none; flex: 1; flex-direction: column; padding: 20px; overflow-y: auto; }
         .tab-content.active { display: flex; }
+
         #display { width: 100%; padding: 20px; margin-bottom: 10px; font-size: 2rem; background: var(--bg-sec); border: none; color: var(--text-main); border-radius: 12px; text-align: right; outline: none; }
-        .result-box { padding: 15px; margin-bottom: 20px; border-radius: 12px; background: var(--bg-card); font-size: 1.5rem; font-weight: bold; border-left: 5px solid var(--accent); text-align: right; min-height: 30px; }
+        .result-box { padding: 15px; margin-bottom: 20px; border-radius: 12px; background: var(--bg-card); font-size: 1.5rem; font-weight: bold; border-left: 5px solid var(--accent); text-align: right; min-height: 30px; color: var(--text-main); }
+        
         .keypad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 15px; }
         button.key { background: var(--bg-card); border: none; border-radius: 12px; color: var(--text-main); font-size: 1.2rem; cursor: pointer; font-weight: bold; padding: 15px 0; }
         button.key:active { transform: scale(0.95); opacity: 0.8; }
         button.key.sci { background: var(--sci-btn); font-size: 1rem; }
-        button.key.op { background: var(--accent); color: var(--bg-main); }
+        button.key.op { background: var(--accent); color: white; }
         button.key.action { background: #ed4245; color: white;}
+        
         .calc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
         .btn-calc { padding: 20px; font-size: 1.1rem; font-weight: bold; border: none; border-radius: 12px; color: white; cursor: pointer; }
-        .btn-bodmas { background: #23a559; } .btn-no-bodmas { background: var(--accent); color: var(--bg-main); }
+        .btn-bodmas { background: #23a559; } .btn-no-bodmas { background: var(--accent); }
+
         .history-container { background: var(--bg-sec); border-radius: 12px; padding: 15px; margin-bottom: 20px; }
-        .history-item { background: var(--bg-card); padding: 10px; border-radius: 8px; font-size: 1.1rem; text-align: right; border-left: 4px solid var(--accent); margin-bottom: 10px; }
+        .history-item { background: var(--bg-card); padding: 10px; border-radius: 8px; font-size: 1.1rem; text-align: right; border-left: 4px solid var(--accent); margin-bottom: 10px; color: var(--text-main); }
+
         .conv-group, .theme-group { margin-bottom: 15px; }
+        .conv-group label { display: block; margin-bottom: 5px; opacity: 0.7; font-size: 0.9rem; }
         select, .conv-input { width: 100%; padding: 15px; font-size: 1.2rem; background: var(--bg-card); border: none; color: var(--text-main); border-radius: 8px; outline: none; }
-        .btn-convert { width: 100%; padding: 15px; background: var(--accent); border: none; color: var(--bg-main); font-size: 1.2rem; border-radius: 8px; font-weight: bold; cursor: pointer;}
+        
         .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .theme-btn-card { background: var(--bg-card); border: 2px solid transparent; padding: 15px 10px; border-radius: 8px; color: var(--text-main); font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .theme-btn-card { background: var(--bg-card); border: 2px solid transparent; padding: 15px 10px; border-radius: 8px; color: var(--text-main); font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .theme-btn-card.active-theme { border-color: var(--accent); }
     </style>
 </head>
@@ -272,4 +242,17 @@
 </div>
 
 <div id="tab-conv" class="tab-content">
-    <div class="conv-group"><input type="text" id="search-units"
+    <div class="conv-group"><input type="text" id="search-units" class="conv-input" placeholder="🔍 Search units..." onkeyup="renderFromDropdown()"></div>
+    <div class="conv-group"><label>Value:</label><input type="number" id="conv-val" class="conv-input" placeholder="0" oninput="convertUnits()"></div>
+    <div class="conv-group"><label>From:</label><select id="conv-from" onchange="updateToDropdown()"></select></div>
+    <div class="conv-group"><label>To:</label><select id="conv-to" onchange="convertUnits()"></select></div>
+    <div class="result-box" style="text-align:center;" id="conv-result">Result</div>
+</div>
+
+<div id="tab-theme" class="tab-content">
+    <div class="theme-group"><input type="text" id="search-theme-input" class="conv-input" placeholder="🔍 Search Themes..." onkeyup="renderThemes()"></div>
+    <div class="theme-grid" id="theme-grid"></div>
+</div>
+
+</body>
+</html>
