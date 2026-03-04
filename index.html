@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="manifest" href="manifest.json">
+    <link id="app-favicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjEyOCIgZmlsbD0iIzU4NjVGMiIvPjxyZWN0IHg9IjEwNiIgeT0iOTYiIHdpZHRoPSIzMDAiIGhlaWdodD0iMzIwIiByeD0iMzIiIGZpbGw9IiMyMzI3MmEiLz48cmVjdCB4PSIxMzYiIHk9IjEzNiIgd2lkdGg9IjI0MCIgaGVpZ2h0PSI3MCIgcng9IjEyIiBmaWxsPSIjMWUxZjIyIi8+PHJlY3QgeD0iMjk2IiB5PSIxNjUiIHdpZHRoPSI2MCIgaGVpZ2h0PSIxMiIgcng9IjYiIGZpbGw9IiM1ODY1RjIiLz48Y2lyY2xlIGN4PSIxNjYiIGN5PSIyNTYiIHI9IjI0IiBmaWxsPSIjNGY1NDVjIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMjU2IiByPSIyNCIgZmlsbD0iIzRmNTQ1YyIvPjxjaXJjbGUgY3g9IjM0NiIgY3k9IjI1NiIgcj0iMjQiIGZpbGw9IiNlZDQyNDUiLz48Y2lyY2xlIGN4PSIxNjYiIGN5PSIzMzYiIHI9IjI0IiBmaWxsPSIjNGY1NDVjIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMzM2IiByPSIyNCIgZmlsbD0iIzRmNTQ1YyIvPjxjaXJjbGUgY3g9IjM0NiIgY3k9IjMzNiIgcj0iMjQiIGZpbGw9IiM0Q0FGNTQiLz48L3N2Zz4=">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" id="meta-theme-color" content="#313338">
     <title>Blurple Pro App</title>
@@ -48,7 +49,6 @@
         .tab-content { display: none; flex: 1; flex-direction: column; padding: 20px; overflow-y: auto; }
         .tab-content.active { display: flex; }
 
-        /* CALC STYLES */
         #display { width: 100%; padding: 20px; margin-bottom: 10px; font-size: 2rem; background: var(--bg-sec); border: none; color: var(--text-main); border-radius: 12px; text-align: right; outline: none; transition: background 0.3s, color 0.3s;}
         .result-box { padding: 15px; margin-bottom: 20px; border-radius: 12px; background: var(--bg-card); font-size: 1.5rem; font-weight: bold; border-left: 5px solid var(--accent); text-align: right; min-height: 30px; color: var(--text-main); transition: background 0.3s, color 0.3s;}
         .keypad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 15px; }
@@ -64,16 +64,17 @@
         .history-container { background: var(--bg-sec); border-radius: 12px; padding: 15px; margin-bottom: 20px; transition: background 0.3s; }
         .history-item { background: var(--bg-card); padding: 10px; border-radius: 8px; font-size: 1.1rem; text-align: right; border-left: 4px solid var(--accent); margin-bottom: 10px; color: var(--text-main); transition: background 0.3s, color 0.3s; }
 
-        /* CONV STYLES */
         .conv-group, .theme-group { margin-bottom: 15px; }
         .conv-group label { display: block; margin-bottom: 5px; opacity: 0.7; font-size: 0.9rem; }
         select, .conv-input { width: 100%; padding: 15px; font-size: 1.2rem; background: var(--bg-card); border: none; color: var(--text-main); border-radius: 8px; outline: none; transition: background 0.3s, color 0.3s; }
         .btn-convert { width: 100%; padding: 15px; background: var(--accent); border: none; color: white; font-size: 1.2rem; border-radius: 8px; font-weight: bold; cursor: pointer;}
         
-        /* THEME STYLES */
-        .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .theme-btn-card { background: var(--bg-card); border: 2px solid transparent; padding: 15px 10px; border-radius: 8px; color: var(--text-main); font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.3s, color 0.3s; }
-        .theme-btn-card.active-theme { border-color: var(--accent); }
+        /* NEW CUSTOM THEME GRID */
+        .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .theme-btn-card { background: var(--bg-card); border: 2px solid transparent; padding: 15px 10px; border-radius: 12px; color: var(--text-main); font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: flex-start; gap: 10px; transition: background 0.3s, border 0.3s, transform 0.1s; font-size: 1.05rem;}
+        .theme-btn-card:active { transform: scale(0.95); }
+        .theme-btn-card.active-theme { border-color: var(--accent); box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .theme-icon { font-size: 1.5rem; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
@@ -120,17 +121,36 @@
 
 
 <script>
-    // 1. DATA
+    // 1. DATA WITH NEW CUSTOM ICONS
     let calcHistory = [];
     let liveCurrencyRates = {}; 
     
     const allThemes = [
-        { id: 'dark', name: 'Discord Dark', color: '#5865F2' }, { id: 'midnight', name: 'Discord Midnight', color: '#000000' }, { id: 'light', name: 'Discord Light', color: '#ffffff' }, { id: 'blurple', name: 'Classic Blurple', color: '#23272a' },
-        { id: 'mint-apple', name: 'Mint Apple', color: '#4caf50' }, { id: 'citrus-sherbert', name: 'Citrus Sherbert', color: '#ff9800' }, { id: 'retro-raincloud', name: 'Retro Raincloud', color: '#607d8b' }, { id: 'hanami', name: 'Hanami', color: '#e91e63' },
-        { id: 'sunrise', name: 'Sunrise', color: '#ff5722' }, { id: 'cotton-candy', name: 'Cotton Candy', color: '#9c27b0' }, { id: 'lofi-vibes', name: 'Lofi Vibes', color: '#9d81d4' }, { id: 'desert-khaki', name: 'Desert Khaki', color: '#795548' },
-        { id: 'sunset', name: 'Sunset', color: '#ff7043' }, { id: 'chroma-glow', name: 'Chroma Glow', color: '#00e5ff' }, { id: 'forest', name: 'Forest', color: '#66bb6a' }, { id: 'crimson', name: 'Crimson', color: '#ff5252' },
-        { id: 'midnight-blurple', name: 'Midnight Blurple', color: '#58a6ff' }, { id: 'mars', name: 'Mars', color: '#bf360c' }, { id: 'dusk', name: 'Dusk', color: '#651fff' }, { id: 'under-the-sea', name: 'Under The Sea', color: '#1de9b6' },
-        { id: 'retro-storm', name: 'Retro Storm', color: '#00bcd4' }, { id: 'neon-nights', name: 'Neon Nights', color: '#ff00ff' }, { id: 'strawberry-lemonade', name: 'Strawberry', color: '#ff1493' }, { id: 'aurora', name: 'Aurora', color: '#00e676' }, { id: 'sepia', name: 'Sepia', color: '#a0522d' }
+        { id: 'dark', name: 'Dark', color: '#5865F2', icon: '🌙' }, 
+        { id: 'midnight', name: 'Midnight', color: '#000000', icon: '🌌' }, 
+        { id: 'light', name: 'Light', color: '#ffffff', icon: '☀️' }, 
+        { id: 'blurple', name: 'Blurple', color: '#23272a', icon: '👾' },
+        { id: 'mint-apple', name: 'Mint Apple', color: '#4caf50', icon: '🍏' }, 
+        { id: 'citrus-sherbert', name: 'Sherbert', color: '#ff9800', icon: '🍊' }, 
+        { id: 'retro-raincloud', name: 'Raincloud', color: '#607d8b', icon: '🌧️' }, 
+        { id: 'hanami', name: 'Hanami', color: '#e91e63', icon: '🌸' },
+        { id: 'sunrise', name: 'Sunrise', color: '#ff5722', icon: '🌅' }, 
+        { id: 'cotton-candy', name: 'Candy', color: '#9c27b0', icon: '🍭' }, 
+        { id: 'lofi-vibes', name: 'Lofi Vibes', color: '#9d81d4', icon: '🎧' }, 
+        { id: 'desert-khaki', name: 'Khaki', color: '#795548', icon: '🏜️' },
+        { id: 'sunset', name: 'Sunset', color: '#ff7043', icon: '🌇' }, 
+        { id: 'chroma-glow', name: 'Chroma', color: '#00e5ff', icon: '✨' }, 
+        { id: 'forest', name: 'Forest', color: '#66bb6a', icon: '🌲' }, 
+        { id: 'crimson', name: 'Crimson', color: '#ff5252', icon: '🩸' },
+        { id: 'midnight-blurple', name: 'Midnight 2', color: '#58a6ff', icon: '🌃' }, 
+        { id: 'mars', name: 'Mars', color: '#bf360c', icon: '🪐' }, 
+        { id: 'dusk', name: 'Dusk', color: '#651fff', icon: '🌆' }, 
+        { id: 'under-the-sea', name: 'Ocean', color: '#1de9b6', icon: '🌊' },
+        { id: 'retro-storm', name: 'Storm', color: '#00bcd4', icon: '🌩️' }, 
+        { id: 'neon-nights', name: 'Neon', color: '#ff00ff', icon: '🪩' }, 
+        { id: 'strawberry-lemonade', name: 'Berry', color: '#ff1493', icon: '🍓' }, 
+        { id: 'aurora', name: 'Aurora', color: '#00e676', icon: '🌠' }, 
+        { id: 'sepia', name: 'Sepia', color: '#a0522d', icon: '📜' }
     ];
 
     const unitCategories = {
@@ -168,13 +188,25 @@
         }
     };
 
-    // 3. THEME LOGIC
+    // 3. THEME LOGIC & DYNAMIC APP LOGO RE-PAINTER
     window.applyTheme = function(themeId) {
         document.documentElement.setAttribute('data-theme', themeId);
         localStorage.setItem('appTheme', themeId);
         let activeObj = allThemes.find(t => t.id === themeId);
-        if(activeObj) document.getElementById('meta-theme-color').setAttribute('content', activeObj.color);
-        if(document.getElementById('theme-grid')) renderThemes(); 
+        if(activeObj) {
+            document.getElementById('meta-theme-color').setAttribute('content', activeObj.color);
+        }
+        if(document.getElementById('theme-grid')) window.renderThemes(); 
+
+        // Dynamic Favicon Generator! (Paints the app logo to match the theme)
+        setTimeout(() => {
+            const root = document.documentElement;
+            const bg = getComputedStyle(root).getPropertyValue('--bg-main').trim() || '#23272a';
+            const sec = getComputedStyle(root).getPropertyValue('--bg-sec').trim() || '#1e1f22';
+            const accent = getComputedStyle(root).getPropertyValue('--accent').trim() || '#5865F2';
+            const svgLogo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="128" fill="${accent}"/><rect x="106" y="96" width="300" height="320" rx="32" fill="${bg}"/><rect x="136" y="136" width="240" height="70" rx="12" fill="${sec}"/><rect x="296" y="165" width="60" height="12" rx="6" fill="${accent}"/><circle cx="166" cy="256" r="24" fill="#4f545c"/><circle cx="256" cy="256" r="24" fill="#4f545c"/><circle cx="346" cy="256" r="24" fill="#ed4245"/><circle cx="166" cy="336" r="24" fill="#4f545c"/><circle cx="256" cy="336" r="24" fill="#4f545c"/><circle cx="346" cy="336" r="24" fill="#4CAF50"/></svg>`;
+            document.getElementById('app-favicon').href = 'data:image/svg+xml;base64,' + btoa(svgLogo);
+        }, 50);
     };
 
     window.renderThemes = function() {
@@ -187,7 +219,8 @@
             if (t.name.toLowerCase().includes(q)) {
                 let div = document.createElement('div');
                 div.className = 'theme-btn-card ' + (currentTheme === t.id ? 'active-theme' : '');
-                div.innerHTML = `<span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:${t.color}; border: 1px solid rgba(0,0,0,0.2);"></span>${t.name}`;
+                // NATIVE ICONS ADDED HERE:
+                div.innerHTML = `<span class="theme-icon">${t.icon}</span> <span>${t.name}</span>`;
                 div.onclick = () => window.applyTheme(t.id);
                 grid.appendChild(div);
             }
@@ -284,5 +317,3 @@
 </script>
 </body>
 </html>
-
-
